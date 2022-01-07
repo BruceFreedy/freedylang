@@ -59,6 +59,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             if (process instanceof VariableImpl) {
                 VariableImpl variable = (VariableImpl) this.process;
                 nodes.addAll(variable.getNodes());
+                System.out.println(nodes);
                 params = variable.params;
                 body = variable.body;
                 assignment = variable.assignment;
