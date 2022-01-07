@@ -1,0 +1,36 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath "gradle.plugin.com.github.johnrengelman:shadow:7.1.2"
+    }
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: "java"
+apply plugin: "java-library"
+apply plugin: "maven-publish"
+
+sourceCompatibility = 1.8
+version = 1.0
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+sourceSets.main.java.srcDirs = [ "src/" ]
+
+ext.github = uri("https://maven.pkg.github.com/")
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(":common")
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+}
+
