@@ -59,10 +59,9 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             if (process instanceof VariableImpl) {
                 VariableImpl variable = (VariableImpl) this.process;
                 nodes.addAll(variable.getNodes());
-                System.out.println(nodes);
-                params = variable.params;
                 body = variable.body;
                 assignment = variable.assignment;
+                params = variable.params;
                 process = variable.getProcess();
             } else break;
         }
@@ -98,7 +97,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
     @Override
     public void run(ProcessUnit processUnit) {
         VariableRegister scope = processUnit.getVariableRegister();
-        if (params != null && body != null) {
+        if (params != null && body != null) {  //method body
             scope.setVariable(nodes, this);
         } else if (params == null && body != null && assignment == null) {  //class
             if (initialized) {
@@ -106,7 +105,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             } else {
                 initialized = true;
                 scope.setVariable(nodes, this);
-                declaration.forEach(p -> p.run(processUnit));
+                body.setBeforeRun(() -> declaration.forEach(p -> p.run(processUnit)));
                 body.run(processUnit);
             }
         } else if (params != null) {  //method call
@@ -118,8 +117,8 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                 if (func.args.size() <= paramsList.size()) {
                     func.body.setBeforeRun(
                             () -> IntStream.range(0, func.args.size()).forEach(i -> scope.setVariable(func.args.get(i), paramsList.get(i))));
-                    func.body.run(processUnit);
                 }
+                func.body.run(processUnit);
                 this.result = func.body.get();
             }
         } else if (assignment != null) {  //assignment
