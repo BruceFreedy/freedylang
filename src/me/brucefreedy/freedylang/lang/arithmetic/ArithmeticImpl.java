@@ -99,4 +99,10 @@ public abstract class ArithmeticImpl extends Number implements Stealer<Number>, 
         return this;
     }
 
+    @Override
+    public String toString() {
+        if (number == null) return a.toString() + (next == null ? b.toString() : next.toString());
+        else return super.toString();
+    }
+
 }
