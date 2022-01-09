@@ -61,6 +61,7 @@ public class VariableRegister extends List<Scope> {
     }
 
     public boolean setVariable(Scope scope, List<String> nameList, Object variable) {
+        if (scope == null) return false;
         Iterator<String> iterator = nameList.iterator();
         while (iterator.hasNext()) {
             String name = iterator.next();
@@ -79,6 +80,7 @@ public class VariableRegister extends List<Scope> {
     }
 
     public Object getVariable(Scope scope, List<String> nameList) {
+        if (scope == null) return null;
         Iterator<String> iterator = nameList.iterator();
         while (iterator.hasNext()) {
             String name = iterator.next();

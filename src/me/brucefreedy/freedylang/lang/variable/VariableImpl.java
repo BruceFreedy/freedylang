@@ -31,6 +31,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
     protected Scope scope;
     protected List<Process<?>> declaration;
     protected boolean initialized = false;
+    protected Scope parent;
 
     public Scope getScope() {
         return scope;
@@ -102,6 +103,8 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
         VariableRegister scope = processUnit.getVariableRegister();
         if (params != null && body != null) {  //method body
             scope.setVariable(nodes, this);
+            parent = scope.peek();
+            System.out.println(parent == null);
         } else if (params == null && body != null && assignment == null) {  //class
             if (initialized) {
                 process.run(processUnit);
@@ -151,8 +154,11 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             body.setBeforeRun(
                     () -> IntStream.range(0, args.size()).forEach(i -> scope.setVariable(args.get(i), params.get(i))));
         }
+        scope.add(parent);
         body.run(processUnit);
+        scope.popPeek();
         return body.get();
 
     }
+
 }

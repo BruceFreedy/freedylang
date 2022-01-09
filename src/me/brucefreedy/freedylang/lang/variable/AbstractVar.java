@@ -7,7 +7,7 @@ import me.brucefreedy.freedylang.lang.scope.ScopeSupplier;
 
 public class AbstractVar<T> extends Null implements ScopeSupplier {
     protected final Scope scope = new Scope();
-    protected final T object;
+    protected T object;
 
     public AbstractVar(T object) {
         this.object = object;
@@ -15,6 +15,7 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
 
     @Override
     public String toString() {
+        if (object == null) return super.toString();
         return object.toString();
     }
     @Override

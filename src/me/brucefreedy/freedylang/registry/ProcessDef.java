@@ -27,7 +27,7 @@ import java.util.function.Supplier;
 
 @Getter
 @AllArgsConstructor
-public enum ProcessDef {
+public enum     ProcessDef {
     SKIP(Skipper::new),
     BREAK(Breaker::new),
     CONSOLE_LOGGING(ConsoleLogging::new),
@@ -66,6 +66,7 @@ public enum ProcessDef {
     SINGLE_COMMENT(SingleComment::new),
     MULTI_COMMENT(MultiComment::new),
     WHILE(WhileImpl::new),
+    NEW(SimpleInstance::new),
     ;
     private final Supplier<Process<?>> processSupplier;
 }

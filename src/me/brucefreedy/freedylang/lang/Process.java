@@ -1,5 +1,6 @@
 package me.brucefreedy.freedylang.lang;
 
+import me.brucefreedy.freedylang.lang.abst.Vanisher;
 import me.brucefreedy.freedylang.lang.regex.Regex;
 import me.brucefreedy.freedylang.lang.variable.VariableImpl;
 import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
@@ -55,6 +56,7 @@ public interface Process<R> extends Supplier<R> {
         if (process == null) return parsing(parseUnit);
 //        process.debug();
         process.parse(parseUnit);
+        if (process instanceof Vanisher && ((Vanisher<?>) process).vanish()) return parsing(parseUnit);
         if (process instanceof Skipper) return parsing(parseUnit);
         return process;
     }
