@@ -19,12 +19,16 @@ public class VariableRegister extends List<Scope> {
 
     public Object getVariable(List<String> nameList) {
         if (nameList.size() == 1) return getVariable(nameList.get(0));
-        return getVariable(first(), nameList);
+        Object variable = getVariable(first(), nameList);
+        if (variable == null) return getVariable(peek(), nameList);
+        else return variable;
     }
 
     public void setVariable(List<String> nameList, Object process) {
         if (nameList.size() == 1) setVariable(nameList.get(0), process);
-        else setVariable(first(), nameList, process);
+        else if (!setVariable(first(), nameList, process)) {
+            setVariable(peek(), nameList, process);
+        }
     }
 
     public Object getVariable(Scope scope, String name) {
@@ -56,13 +60,14 @@ public class VariableRegister extends List<Scope> {
         peek().register(name, variable);
     }
 
-    public void setVariable(Scope scope, List<String> nameList, Object variable) {
+    public boolean setVariable(Scope scope, List<String> nameList, Object variable) {
         Iterator<String> iterator = nameList.iterator();
         while (iterator.hasNext()) {
             String name = iterator.next();
             Object process = scope.getRegistry(name);
             if (!iterator.hasNext()) {
                 scope.register(name, variable);
+                return true;
             }
             if (process instanceof ScopeSupplier) {
                 scope = ((ScopeSupplier) process).getScope();
@@ -70,6 +75,7 @@ public class VariableRegister extends List<Scope> {
             }
 
         }
+        return false;
     }
 
     public Object getVariable(Scope scope, List<String> nameList) {
