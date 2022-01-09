@@ -21,10 +21,7 @@ import me.brucefreedy.freedylang.lang.control.conditional.*;
 import me.brucefreedy.freedylang.lang.control.iteration.WhileImpl;
 import me.brucefreedy.freedylang.lang.quotation.DoubleQuotation;
 import me.brucefreedy.freedylang.lang.quotation.SingleQuotation;
-import me.brucefreedy.freedylang.lang.variable.Assignment;
-import me.brucefreedy.freedylang.lang.variable.Member;
-import me.brucefreedy.freedylang.lang.variable.SimpleNull;
-import me.brucefreedy.freedylang.lang.variable.VariableImpl;
+import me.brucefreedy.freedylang.lang.variable.*;
 
 import java.util.function.Supplier;
 

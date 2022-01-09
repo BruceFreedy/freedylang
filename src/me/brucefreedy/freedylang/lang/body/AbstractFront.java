@@ -10,7 +10,7 @@ import me.brucefreedy.freedylang.lang.scope.Scope;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public abstract class AbstractFront extends ListProcess<Object>
+public abstract class AbstractFront extends ListProcess
         implements Empty<Object>, AfterRun, Stacker<Object>, Predicate<Process<?>>, Returner {
 
     protected Process<?> footProcess = new Breaker();
@@ -46,12 +46,12 @@ public abstract class AbstractFront extends ListProcess<Object>
             Process<?> process = Process.parsing(parseUnit);
             Process<?> peek = null;
             boolean popped = parseUnit.popPeek(stealer -> {
-                processes.add(stealer);
+                getProcesses().add(stealer);
                 stealer.setProcess(process);
             });
             if (process instanceof Stacker) {
                 peek = ((Stacker<?>) process).getPeek();
-                if (!popped && peek instanceof Empty) processes.add(process);
+                if (!popped && peek instanceof Empty) getProcesses().add(process);
             }
             if (test(process) || test(peek)) {
                 if (!parseUnit.getSource().isEmpty()) {
@@ -69,7 +69,7 @@ public abstract class AbstractFront extends ListProcess<Object>
         boolean isMethodScope = scope.getType() == Scope.ScopeType.METHOD;
         processUnit.getVariableRegister().add(scope);
         beforeRun.run();
-        for (Process<?> process : processes) {
+        for (Process<?> process : getProcesses()) {
             process.run(processUnit);
             if (isMethodScope && processUnit.getReturner() != null) {
                 result = processUnit.getReturner().getReturn();
@@ -90,7 +90,7 @@ public abstract class AbstractFront extends ListProcess<Object>
     @Override
     public Object get() {
         if (result != null) return result;
-        if (!processes.isEmpty()) return processes.first().get();
+        if (!getProcesses().isEmpty()) return getProcesses().first().get();
         return new Null();
     }
 

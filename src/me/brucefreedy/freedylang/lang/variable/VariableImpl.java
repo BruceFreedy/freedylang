@@ -5,6 +5,7 @@ import me.brucefreedy.freedylang.lang.ParseUnit;
 import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.Processable;
+import me.brucefreedy.freedylang.lang.abst.Method;
 import me.brucefreedy.freedylang.lang.abst.Null;
 import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
 import me.brucefreedy.freedylang.lang.body.AbstractFront;
@@ -18,7 +19,7 @@ import java.util.stream.IntStream;
  * method, variable, class
  */
 @Processable(alias = "class")
-public class VariableImpl extends ProcessImpl<Object> implements Variable<Object>, ScopeSupplier {
+public class VariableImpl extends ProcessImpl<Object> implements Variable<Object>, ScopeSupplier, Method {
 
     protected String string;
     protected AbstractFront body;
@@ -35,7 +36,9 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
         return scope;
     }
 
-    public VariableImpl() {}
+    public VariableImpl() {
+        super();
+    }
 
     public VariableImpl(String string) {
         this.string = string;
@@ -110,20 +113,13 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             }
         } else if (params != null) {  //method call
             Object variable = scope.getVariable(nodes);
-            if (variable instanceof VariableImpl) {
-                VariableImpl func = (VariableImpl) variable;
+            if (variable instanceof Method) {
                 List<Process<?>> paramsList = params.getProcesses();
-                paramsList.forEach(p -> p.run(processUnit));
-                if (func.args.size() <= paramsList.size()) {
-                    func.body.setBeforeRun(
-                            () -> IntStream.range(0, func.args.size()).forEach(i -> scope.setVariable(func.args.get(i), paramsList.get(i))));
-                }
-                func.body.run(processUnit);
-                this.result = func.body.get();
+                result = ((Method) variable).run(processUnit, paramsList);
             }
         } else if (assignment != null) {  //assignment
             assignment.run(processUnit);
-            result = assignment.get();
+            result = assignment;
             scope.setVariable(nodes, result);
         } else {  //variable
             Object variable = scope.getVariable(nodes);
@@ -145,5 +141,18 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
     public String toString() {
         if (body != null) return string;
         return result.toString();
+    }
+
+    @Override
+    public Object run(ProcessUnit processUnit, List<Process<?>> params) {
+        VariableRegister scope = processUnit.getVariableRegister();
+        params.forEach(p -> p.run(processUnit));
+        if (args.size() <= params.size()) {
+            body.setBeforeRun(
+                    () -> IntStream.range(0, args.size()).forEach(i -> scope.setVariable(args.get(i), params.get(i))));
+        }
+        body.run(processUnit);
+        return body.get();
+
     }
 }

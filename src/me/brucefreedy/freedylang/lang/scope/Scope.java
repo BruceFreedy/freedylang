@@ -22,14 +22,6 @@ public class Scope extends RegistryImpl<String, Object> {
         this.type = type;
     }
 
-    public boolean isMethod() {
-        return isNotClass();
-    }
-
-    public boolean isNotClass() {
-        return type != ScopeType.CLASS;
-    }
-
     public boolean isBody() {
         return type == ScopeType.BODY;
     }
