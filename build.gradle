@@ -27,7 +27,9 @@ repositories {
 }
 
 dependencies {
-    implementation project(":common")
+    implementation rootProject.fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation rootProject(":common")
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
