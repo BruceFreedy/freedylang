@@ -1,12 +1,7 @@
-class sum {
-    num = 0
-    set(value) {
-        num = value;
-        test
-    }
+class A {
+    var = 100
 }
 
-var = new sum
-var.set(100)
-log var.num
-log sum.num
+A.var = 50
+
+log A.var

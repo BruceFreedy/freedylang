@@ -8,7 +8,8 @@ import me.brucefreedy.freedylang.lang.abst.Empty;
 import me.brucefreedy.freedylang.lang.body.AbstractFront;
 
 @Processable(alias = "new")
-public class SimpleInstance extends AbstractVar<AbstractFront> implements Process<SimpleInstance>, Empty<SimpleInstance> {
+public class SimpleInstance extends AbstractVar<AbstractFront>
+        implements Process<SimpleInstance>, Empty<SimpleInstance> {
 
     Process<?> process;
 

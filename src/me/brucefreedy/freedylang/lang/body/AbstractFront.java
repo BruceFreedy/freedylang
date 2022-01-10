@@ -78,8 +78,8 @@ public abstract class AbstractFront extends ListProcess
             }
         }
         processUnit.getVariableRegister().remove(scope);
-        processUnit.popPeek(afterRun -> afterRun.afterRun(processUnit));
-        processUnit.add(this);
+//        processUnit.popPeek(afterRun -> afterRun.afterRun(processUnit));
+//        processUnit.add(this);
     }
 
     @Override

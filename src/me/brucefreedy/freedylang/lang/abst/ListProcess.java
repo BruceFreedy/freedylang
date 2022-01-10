@@ -4,6 +4,8 @@ import me.brucefreedy.common.List;
 import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.variable.AbstractVar;
 
+import java.util.function.Supplier;
+
 /**
  * process that contains list of processes
  */
@@ -11,7 +13,7 @@ public abstract class ListProcess extends AbstractVar<List<Process<?>>> {
 
     public ListProcess() {
         super(new List<>());
-        registerMethod("add", (processUnit, params) -> object.addAll(params));
+        registerMethod("add", method(o -> object.addAll(o), (Supplier<List<Process<?>>>) List::new, o -> o, o -> o));
         registerMethod("remove", (processUnit, params) -> object.removeAll(params));
     }
 

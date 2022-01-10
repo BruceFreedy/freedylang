@@ -1,10 +1,8 @@
 package me.brucefreedy.freedylang.lang.variable;
 
 import me.brucefreedy.common.List;
-import me.brucefreedy.freedylang.lang.ParseUnit;
+import me.brucefreedy.freedylang.lang.*;
 import me.brucefreedy.freedylang.lang.Process;
-import me.brucefreedy.freedylang.lang.ProcessUnit;
-import me.brucefreedy.freedylang.lang.Processable;
 import me.brucefreedy.freedylang.lang.abst.Method;
 import me.brucefreedy.freedylang.lang.abst.Null;
 import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
@@ -12,6 +10,7 @@ import me.brucefreedy.freedylang.lang.body.AbstractFront;
 import me.brucefreedy.freedylang.lang.scope.Scope;
 import me.brucefreedy.freedylang.lang.scope.ScopeSupplier;
 
+import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -91,6 +90,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             parseUnit.getDeclaration().popPeek();
         } else if (process instanceof Assignment) {  //assignment
             assignment = Process.parsing(parseUnit);
+            process = new Breaker();
             parseUnit.popPeek(stealer -> {
                 stealer.setProcess(assignment);
                 assignment = stealer;
@@ -104,7 +104,6 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
         if (params != null && body != null) {  //method body
             scope.setVariable(nodes, this);
             parent = scope.peek();
-            System.out.println(parent == null);
         } else if (params == null && body != null && assignment == null) {  //class
             if (initialized) {
                 process.run(processUnit);
@@ -121,14 +120,23 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                 result = ((Method) variable).run(processUnit, paramsList);
             }
         } else if (assignment != null) {  //assignment
+            Object variable = scope.getVariable(nodes);
             assignment.run(processUnit);
-            result = assignment;
-            scope.setVariable(nodes, result);
+            if (variable instanceof Method && !(variable instanceof VariableImpl)) {
+                if (assignment instanceof AbstractFront) {
+                    ((Method) variable).run(processUnit, ((AbstractFront) assignment).getProcesses());
+                } else ((Method) variable).run(processUnit, new List<>(Collections.singletonList(assignment)));
+            } else {
+                result = assignment;
+                scope.setVariable(nodes, result);
+            }
         } else {  //variable
             Object variable = scope.getVariable(nodes);
             if (variable == null) result = new Null();
             else {
-                result = variable;
+                if (variable instanceof Method && !(variable instanceof VariableImpl)) {
+                    result = ((Method) variable).run(processUnit, new List<>());
+                } else result = variable;
             }
         }
         super.run(processUnit);
