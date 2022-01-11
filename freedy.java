@@ -1,7 +1,8 @@
 class A {
     f1() {
+        log 'hello'
         log A
-        return freedy.A
+        return A
     }
 }
-freedy.A.f1().f1()
+log freedy.A.f1().f1().f1()

@@ -11,7 +11,6 @@ import me.brucefreedy.freedylang.lang.scope.Scope;
 import me.brucefreedy.freedylang.lang.scope.ScopeSupplier;
 
 import java.util.Collections;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -55,7 +54,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
         return string;
     }
 
-    protected void setVariable(VariableRegister register, List<String> nodes, Object o) {
+    protected void setVariable(VariableRegister register, List<String> nodes, Object process) {
         if (beforeScope == null) register.setVariable(nodes, process);
         else register.setVariable(beforeScope.getScope(), nodes, process);
     }
@@ -79,17 +78,19 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                 assignment = variable.assignment;
                 params = variable.params;
                 process = variable.getProcess();
-                if (params != null) break;
+                nextFunc = variable.nextFunc;
             } else break;
         }
         if (process instanceof AbstractFront) {  //method
             params = ((AbstractFront) process);
             process = params.getProcess();
-            while (process instanceof Member) {  //next func
-                process = Process.parsing(parseUnit);
-                if (process instanceof VariableImpl) {
-                    nextFunc = (VariableImpl) this.process;
-                } else break;
+            if (nodes.size() == 1) {
+                while (process instanceof Member) {  //next func
+                    process = Process.parsing(parseUnit);
+                    if (process instanceof VariableImpl) {
+                        nextFunc = (VariableImpl) this.process;
+                    } else break;
+                }
             }
             if (process instanceof AbstractFront) {  //method body
                 body = ((AbstractFront) process);
@@ -142,8 +143,8 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                     nextFunc.beforeScope = ((ScopeSupplier) result);
                     nextFunc.run(processUnit);
                     this.result = nextFunc.result;
-                }
-                this.result = result;
+                    return;
+                } else this.result = result;
             }
         } else if (assignment != null) {  //assignment
             Object variable = getVariable(scope, nodes);
@@ -176,6 +177,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
 
     @Override
     public String toString() {
+        if (true) return String.valueOf(nextFunc);
         if (body != null) return string;
         return result.toString();
     }
