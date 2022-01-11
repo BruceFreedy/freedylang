@@ -1,7 +1,7 @@
 class A {
-    var = 100
+    f1() {
+        log A
+        return freedy.A
+    }
 }
-
-A.var = 50
-
-log A.var
+freedy.A.f1().f1()

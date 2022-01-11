@@ -66,6 +66,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                 assignment = variable.assignment;
                 params = variable.params;
                 process = variable.getProcess();
+                if (params != null) break;
             } else break;
         }
         if (process instanceof AbstractFront) {  //method
