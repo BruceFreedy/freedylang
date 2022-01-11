@@ -1,7 +1,3 @@
-class A {
-    var = 100
+class event {
+    getPlayer().print().a()
 }
-
-A.var = 50
-
-log A.var

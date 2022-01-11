@@ -11,6 +11,7 @@ import me.brucefreedy.freedylang.lang.scope.Scope;
 import me.brucefreedy.freedylang.lang.scope.ScopeSupplier;
 
 import java.util.Collections;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -31,6 +32,8 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
     protected List<Process<?>> declaration;
     protected boolean initialized = false;
     protected Scope parent;
+    protected VariableImpl nextFunc;
+    protected ScopeSupplier beforeScope;
 
     public Scope getScope() {
         return scope;
@@ -52,6 +55,16 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
         return string;
     }
 
+    protected void setVariable(VariableRegister register, List<String> nodes, Object o) {
+        if (beforeScope == null) register.setVariable(nodes, process);
+        else register.setVariable(beforeScope.getScope(), nodes, process);
+    }
+
+    protected Object getVariable(VariableRegister register, List<String> nodes) {
+        if (beforeScope == null) return register.getVariable(nodes);
+        else return register.getVariable(beforeScope.getScope(), nodes);
+    }
+
     @Override
     public void parse(ParseUnit parseUnit) {
         if (string == null) parseUnit.getDeclaration().add(declaration = new List<>());
@@ -71,6 +84,12 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
         if (process instanceof AbstractFront) {  //method
             params = ((AbstractFront) process);
             process = params.getProcess();
+            while (process instanceof Member) {  //next func
+                process = Process.parsing(parseUnit);
+                if (process instanceof VariableImpl) {
+                    nextFunc = (VariableImpl) this.process;
+                } else break;
+            }
             if (process instanceof AbstractFront) {  //method body
                 body = ((AbstractFront) process);
                 body.setScopeSupplier(() -> new Scope(Scope.ScopeType.METHOD));
@@ -114,13 +133,19 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                 body.run(processUnit);
             }
         } else if (params != null) {  //method call
-            Object variable = scope.getVariable(nodes);
+            Object variable = getVariable(scope, nodes);
             if (variable instanceof Method) {
                 List<Process<?>> paramsList = params.getProcesses();
-                result = ((Method) variable).run(processUnit, paramsList);
+                Object result = ((Method) variable).run(processUnit, paramsList);
+                if (nextFunc != null && result instanceof ScopeSupplier) {
+                    nextFunc.beforeScope = ((ScopeSupplier) result);
+                    nextFunc.run(processUnit);
+                    this.result = nextFunc.result;
+                }
+                this.result = result;
             }
         } else if (assignment != null) {  //assignment
-            Object variable = scope.getVariable(nodes);
+            Object variable = getVariable(scope, nodes);
             assignment.run(processUnit);
             if (variable instanceof Method && !(variable instanceof VariableImpl)) {
                 if (assignment instanceof AbstractFront) {
@@ -128,10 +153,10 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                 } else ((Method) variable).run(processUnit, new List<>(Collections.singletonList(assignment)));
             } else {
                 result = assignment;
-                scope.setVariable(nodes, result);
+                setVariable(scope, nodes, result);
             }
         } else {  //variable
-            Object variable = scope.getVariable(nodes);
+            Object variable = getVariable(scope, nodes);
             if (variable == null) result = new Null();
             else {
                 if (variable instanceof Method && !(variable instanceof VariableImpl)) {
