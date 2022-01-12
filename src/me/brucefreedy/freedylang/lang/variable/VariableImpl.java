@@ -35,6 +35,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
     protected ScopeSupplier beforeScope;
 
     public Scope getScope() {
+        if (result instanceof ScopeSupplier) return ((ScopeSupplier) result).getScope();
         return scope;
     }
 
@@ -172,7 +173,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
 
     @Override
     public Object get() {
-        if (scope != null || params != null && body != null) return this;
+        if (params != null && body != null) return this;
         return result;
     }
 

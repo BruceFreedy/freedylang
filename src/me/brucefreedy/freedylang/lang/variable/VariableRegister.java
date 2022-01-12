@@ -19,7 +19,7 @@ public class VariableRegister extends List<Scope> {
 
     public Object getVariable(List<String> nameList) {
         if (nameList.size() == 1) return getVariable(nameList.get(0));
-        for (Scope scope : new List<>(this)) {
+        else for (Scope scope : new List<>(this)) {
             Object variable = getVariable(scope, nameList);
             if (variable != null) return variable;
         }
@@ -28,7 +28,7 @@ public class VariableRegister extends List<Scope> {
 
     public void setVariable(List<String> nameList, Object process) {
         if (nameList.size() == 1) setVariable(nameList.get(0), process);
-        for (Scope scope : new List<>(this)) {
+        else for (Scope scope : new List<>(this)) {
             if (setVariable(scope, nameList, process)) return;
         }
     }

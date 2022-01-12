@@ -24,9 +24,10 @@ public class SimpleInstance extends AbstractVar<AbstractFront>
 
     @Override
     public void run(ProcessUnit processUnit) {
+        VariableRegister register = processUnit.getVariableRegister();
+        process.run(processUnit);
         if (process instanceof VariableImpl) {
-            VariableRegister register = processUnit.getVariableRegister();
-            Object variable = register.getVariable(((VariableImpl) process).nodes);
+            Object variable = process.get();
             if (variable instanceof VariableImpl) {
                 object = ((VariableImpl) variable).body;
                 object.setScopeSupplier(this::getScope);
