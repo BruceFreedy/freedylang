@@ -138,6 +138,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             Object variable = getVariable(scope, nodes);
             if (variable instanceof Method) {
                 List<Process<?>> paramsList = params.getProcesses();
+                paramsList.forEach(p -> p.run(processUnit));
                 Object result = ((Method) variable).run(processUnit, paramsList);
                 if (nextFunc != null && result instanceof ScopeSupplier) {
                     nextFunc.beforeScope = ((ScopeSupplier) result);
@@ -177,7 +178,6 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
 
     @Override
     public String toString() {
-        if (true) return String.valueOf(nextFunc);
         if (body != null) return string;
         return result.toString();
     }

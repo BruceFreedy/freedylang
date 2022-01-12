@@ -66,7 +66,10 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
 
     protected <TYPE, RETURN> Method method(Consumer<RETURN> setter, Supplier<RETURN> getter,
                                            Function<TYPE, RETURN> function, Function<List<Process<?>>, TYPE> func2) {
-        return (processUnit, list) -> method(function.apply(func2.apply(list)), setter, getter);
+        return (processUnit, list) -> {
+            TYPE apply = func2.apply(list);
+            return method(apply == null ? null : function.apply(apply), setter, getter);
+        };
     }
 
     protected <TYPE> TYPE method(TYPE t, Consumer<TYPE> setter, Supplier<TYPE> getter) {

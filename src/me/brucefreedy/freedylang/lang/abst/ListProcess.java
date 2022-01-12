@@ -13,7 +13,7 @@ public abstract class ListProcess extends AbstractVar<List<Process<?>>> {
 
     public ListProcess() {
         super(new List<>());
-        registerMethod("add", method(o -> object.addAll(o), (Supplier<List<Process<?>>>) List::new, o -> o, o -> o));
+        registerMethod("add", method(o -> object.addAll(o), () -> object, o -> o, o -> o));
         registerMethod("remove", (processUnit, params) -> object.removeAll(params));
     }
 
