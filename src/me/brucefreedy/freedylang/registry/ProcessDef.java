@@ -61,6 +61,7 @@ public enum     ProcessDef {
     ADDITION(Arithmetic.Addition::new),
     SUBTRACT(Arithmetic.Subtract::new),
     MULTIPLY(Arithmetic.Multiply::new),
+    SQUARED(Arithmetic.Squared::new),
     DIVIDE(Arithmetic.Divide::new),
     REMAINDER(Arithmetic.Remainder::new),
     SINGLE_COMMENT(SingleComment::new),

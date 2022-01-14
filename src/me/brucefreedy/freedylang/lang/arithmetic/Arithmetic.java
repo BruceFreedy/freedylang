@@ -40,6 +40,18 @@ public interface Arithmetic extends Process<Number> {
         }
     }
 
+    @Processable(alias = "**", regex = true)
+    class Squared extends HighSeqArithmetic {
+        @Override
+        public java.lang.Number operate(java.lang.Number a, java.lang.Number b) {
+            return Math.pow(a.doubleValue(), b.doubleValue());
+        }
+        @Override
+        public Seq getSeq() {
+            return Seq.HIGHEST;
+        }
+    }
+
     @Processable(alias = "/", regex = true)
     class Divide extends HighSeqArithmetic {
         @Override
