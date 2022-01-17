@@ -1,5 +1,6 @@
 package me.brucefreedy.freedylang.lang.variable;
 
+import lombok.Getter;
 import me.brucefreedy.common.List;
 import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.abst.Method;
@@ -10,10 +11,12 @@ import me.brucefreedy.freedylang.lang.variable.number.Number;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class AbstractVar<T> extends Null implements ScopeSupplier {
     protected final Scope scope = new Scope();
+    @Getter
     protected T object;
 
     public AbstractVar(T object) {
@@ -34,10 +37,6 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
         Scope scope = getScope();
         scope.register(name, var);
         return scope;
-    }
-
-    public Scope registerMethod(String name, Method method) {
-        return register(name, method);
     }
 
     protected Method stringValue(Consumer<String> setter, Supplier<String> getter) {
@@ -64,7 +63,7 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
         return method(setter, getter, java.lang.Number::intValue, this::number);
     }
 
-    protected <TYPE, RETURN> Method method(Consumer<RETURN> setter, Supplier<RETURN> getter,
+    protected  <TYPE, RETURN> Method method(Consumer<RETURN> setter, Supplier<RETURN> getter,
                                            Function<TYPE, RETURN> function, Function<List<Process<?>>, TYPE> func2) {
         return (processUnit, list) -> {
             TYPE apply = func2.apply(list);
@@ -72,13 +71,22 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
         };
     }
 
-    protected <TYPE> TYPE method(TYPE t, Consumer<TYPE> setter, Supplier<TYPE> getter) {
+    private <TYPE> TYPE method(TYPE t, Consumer<TYPE> setter, Supplier<TYPE> getter) {
         if (t != null) setter.accept(t);
         return getter.get();
     }
 
     protected java.lang.Number number(List<Process<?>> t) {
         return t.first() instanceof Number ? ((Number) t.first()).getNumber() : null;
+    }
+
+    protected <TYPE> Method method(CastCheck<AbstractVar<TYPE>> check, Class<TYPE> typeClass,
+                                   Consumer<TYPE> setter, Supplier<Object> getter) {
+        return (unit, params) -> {
+            AbstractVar<TYPE> var = check.cast(params);
+            if (var != null) setter.accept(var.getObject());
+            return getter.get();
+        };
     }
 
 }
