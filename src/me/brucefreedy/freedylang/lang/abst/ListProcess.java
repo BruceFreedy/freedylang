@@ -33,7 +33,7 @@ public abstract class ListProcess extends AbstractVar<List<Process<?>>> {
                 return object.get(index);
             } else return new Null();
         });
-        register("each", (Method) (unit, params) -> {
+        register("each", (MethodRunAfter) (unit, params) -> {
             for (Process<?> process : object) {
                 process.run(unit);
                 unit.getVariableRegister().setVariable("e", process.get());
