@@ -18,11 +18,6 @@ public abstract class Number extends ProcessImpl<Number> implements Comparable {
     }
 
     @Override
-    public Number get() {
-        return this;
-    }
-
-    @Override
     public String toString() {
         return getNumber().toString();
     }

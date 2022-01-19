@@ -6,10 +6,16 @@ import me.brucefreedy.freedylang.lang.abst.Method;
 import me.brucefreedy.freedylang.lang.scope.Scope;
 import me.brucefreedy.freedylang.lang.scope.ScopeSupplier;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 public class VariableRegister extends List<Scope> {
 
+    public VariableRegister() {}
+
+    public VariableRegister(Collection<? extends Scope> c) {
+        super(c);
+    }
 
     public Object getVariable(String name) {
         return getVariable(peek(), name);

@@ -4,7 +4,6 @@ import me.brucefreedy.freedylang.lang.ParseUnit;
 import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.Processable;
-import me.brucefreedy.freedylang.lang.abst.AfterRun;
 import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
 import me.brucefreedy.freedylang.lang.body.AbstractFront;
 import me.brucefreedy.freedylang.lang.variable.bool.True;
@@ -12,7 +11,7 @@ import me.brucefreedy.freedylang.lang.variable.bool.True;
 @Processable(alias = "while")
 public class WhileImpl extends ProcessImpl<WhileImpl> {
 
-    private static final AfterRun empty = o -> {};
+//    private static final AfterRun empty = o -> {};
 
     AbstractFront body;
 
@@ -25,9 +24,9 @@ public class WhileImpl extends ProcessImpl<WhileImpl> {
     }
 
     private void run(ProcessUnit processUnit, Process<?> body) {
-        processUnit.add(empty);
+//        processUnit.add(empty);
         body.run(processUnit);
-        processUnit.popPeek();
+//        processUnit.popPeek();
     }
 
     private boolean condition(ProcessUnit processUnit) {
