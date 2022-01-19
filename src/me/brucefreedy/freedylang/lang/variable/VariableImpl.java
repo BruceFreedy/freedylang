@@ -4,6 +4,7 @@ import me.brucefreedy.common.List;
 import me.brucefreedy.freedylang.lang.*;
 import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.abst.Method;
+import me.brucefreedy.freedylang.lang.abst.MethodRunAfter;
 import me.brucefreedy.freedylang.lang.abst.Null;
 import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
 import me.brucefreedy.freedylang.lang.body.AbstractFront;
@@ -139,7 +140,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             Object variable = getVariable(processUnit, scope, nodes);
             if (variable instanceof Method) {
                 List<Process<?>> paramsList = params.getProcesses();
-                paramsList.forEach(p -> p.run(processUnit));
+                if (!(variable instanceof MethodRunAfter)) paramsList.forEach(p -> p.run(processUnit));
                 Object result = ((Method) variable).run(processUnit, paramsList);
                 if (nextFunc != null && result instanceof ScopeSupplier) {
                     nextFunc.beforeScope = ((ScopeSupplier) result);
@@ -150,7 +151,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             }
         } else if (assignment != null) {  //assignment
             Object variable = getVariable(processUnit, scope, nodes);
-            assignment.run(processUnit);
+            if (!(variable instanceof MethodRunAfter)) assignment.run(processUnit);
             if (variable instanceof Method && !(variable instanceof VariableImpl)) {
                 if (assignment instanceof AbstractFront) {
                     ((Method) variable).run(processUnit, ((AbstractFront) assignment).getProcesses());
