@@ -7,8 +7,6 @@ import me.brucefreedy.freedylang.lang.variable.AbstractVar;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
 import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 
-import java.util.function.Supplier;
-
 /**
  * process that contains list of processes
  */
