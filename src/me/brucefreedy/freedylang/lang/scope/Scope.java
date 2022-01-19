@@ -8,6 +8,11 @@ public class Scope extends RegistryImpl<String, Object> {
         BODY, METHOD, CLASS
     }
 
+    public Scope(Scope scope) {
+        super(scope);
+        this.type = scope.type;
+    }
+
     private final ScopeType type;
 
     public ScopeType getType() {

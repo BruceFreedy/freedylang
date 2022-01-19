@@ -5,6 +5,7 @@ import me.brucefreedy.freedylang.lang.Process;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -18,7 +19,7 @@ public final class ProcessUtils {
 
     public static Process<?> parsing(ProcessRegister processRegister, Path path) {
         StringBuilder stringBuilder = new StringBuilder();
-        try (BufferedReader reader = Files.newBufferedReader(path)) {
+        try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
             String line;
             while ((line = reader.readLine()) != null) {
                 stringBuilder.append(line).append("\n");

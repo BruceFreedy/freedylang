@@ -53,4 +53,9 @@ public abstract class Number extends ProcessImpl<Number> implements Comparable {
             return false;
         }
     }
+
+    @Override
+    public Number get() {
+        return new SimpleNumber(number);
+    }
 }
