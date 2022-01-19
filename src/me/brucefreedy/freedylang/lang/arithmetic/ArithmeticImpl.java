@@ -6,6 +6,7 @@ import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.abst.Stacker;
 import me.brucefreedy.freedylang.lang.abst.Stealer;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
+import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 
 public abstract class ArithmeticImpl extends Number implements Stealer<Number>, Arithmetic {
 
@@ -96,7 +97,7 @@ public abstract class ArithmeticImpl extends Number implements Stealer<Number>, 
 
     @Override
     public Number get() {
-        return this;
+        return new SimpleNumber(this.number);
     }
 
     @Override

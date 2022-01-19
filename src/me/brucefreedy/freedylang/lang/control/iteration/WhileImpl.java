@@ -23,22 +23,15 @@ public class WhileImpl extends ProcessImpl<WhileImpl> {
         }
     }
 
-    private void run(ProcessUnit processUnit, Process<?> body) {
-//        processUnit.add(empty);
-        body.run(processUnit);
-//        processUnit.popPeek();
-    }
-
     private boolean condition(ProcessUnit processUnit) {
-        run(processUnit, body);
+        body.run(processUnit);
         return body.get() instanceof True;
     }
 
     @Override
     public void run(ProcessUnit processUnit) {
-        while ((body.getReturn() == null && processUnit.getReturner() == null) && condition(processUnit)) {
-            run(processUnit, body.getProcess());
-        }
+        while ((processUnit.getReturner() == null) && condition(processUnit))
+            body.getProcess().run(processUnit);
     }
 
     @Override

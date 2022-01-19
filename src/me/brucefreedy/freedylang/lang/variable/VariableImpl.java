@@ -161,8 +161,11 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             } else if (assignment instanceof Method) {
                 result = assignment.get();
                 setVariable(processUnit, scope, nodes, result);
-            } else {
+            } else if (assignment instanceof AbstractFront) {
                 result = assignment;
+                setVariable(processUnit, scope, nodes, result);
+            } else {
+                result = assignment.get();
                 setVariable(processUnit, scope, nodes, result);
             }
         } else {  //variable
