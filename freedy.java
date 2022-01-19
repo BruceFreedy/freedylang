@@ -1,21 +1,7 @@
 
-
-class spleef {
-    var = 100
-    joined = ['a']
-    get() {
-        return 'a'
-    }
-    test
+class Test {
+    a() {return Test}
 }
 
-joinMG(game) {
-    test
     log 'aaaa'
-    log game.get()
-    log 'bbbb'
-    return game;
-}
-
-log spleef.get()
-log joinMG(freedy.spleef);
+    log Test.a.a.a.a.a

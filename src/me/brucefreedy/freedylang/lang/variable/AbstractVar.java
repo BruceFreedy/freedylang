@@ -64,7 +64,7 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
     }
 
     protected  <TYPE, RETURN> Method method(Consumer<RETURN> setter, Supplier<RETURN> getter,
-                                           Function<TYPE, RETURN> function, Function<List<Process<?>>, TYPE> func2) {
+                                           Function<TYPE, RETURN> function, Function<List<?>, TYPE> func2) {
         return (processUnit, list) -> {
             TYPE apply = func2.apply(list);
             return method(apply == null ? null : function.apply(apply), setter, getter);
@@ -76,7 +76,7 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
         return getter.get();
     }
 
-    protected java.lang.Number number(List<Process<?>> t) {
+    protected java.lang.Number number(List<?> t) {
         return t.first() instanceof Number ? ((Number) t.first()).getNumber() : null;
     }
 

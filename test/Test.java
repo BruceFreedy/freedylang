@@ -11,7 +11,7 @@ public class Test {
         ProcessRegister processRegister = new ProcessRegister();
         processRegister.register();
         Process<?> process = ProcessUtils.parsing(processRegister, Paths.get(
-                "C:\\Users\\Bruce\\Documents\\IdeaProjects\\freedylang\\freedy.java"
+                "C:\\Users\\Bruce\\IdeaProjects\\freedylang\\freedy.java"
 //                "C:\\Users\\admin\\IdeaProjects\\freedylang\\freedy.java"
         ));
         System.out.println("----------------------");

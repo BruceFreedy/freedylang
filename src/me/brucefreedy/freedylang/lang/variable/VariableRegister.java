@@ -1,6 +1,8 @@
 package me.brucefreedy.freedylang.lang.variable;
 
 import me.brucefreedy.common.List;
+import me.brucefreedy.freedylang.lang.ProcessUnit;
+import me.brucefreedy.freedylang.lang.abst.Method;
 import me.brucefreedy.freedylang.lang.scope.Scope;
 import me.brucefreedy.freedylang.lang.scope.ScopeSupplier;
 
@@ -17,19 +19,19 @@ public class VariableRegister extends List<Scope> {
         setVariable(peek(), name, variable);
     }
 
-    public Object getVariable(List<String> nameList) {
+    public Object getVariable(ProcessUnit processUnit, List<String> nameList) {
         if (nameList.size() == 1) return getVariable(nameList.get(0));
         else for (Scope scope : new List<>(this)) {
-            Object variable = getVariable(scope, nameList);
+            Object variable = getVariable(processUnit, scope, nameList);
             if (variable != null) return variable;
         }
         return null;
     }
 
-    public void setVariable(List<String> nameList, Object process) {
+    public void setVariable(ProcessUnit processUnit, List<String> nameList, Object process) {
         if (nameList.size() == 1) setVariable(nameList.get(0), process);
         else for (Scope scope : new List<>(this)) {
-            if (setVariable(scope, nameList, process)) return;
+            if (setVariable(processUnit, scope, nameList, process)) return;
         }
     }
 
@@ -62,7 +64,7 @@ public class VariableRegister extends List<Scope> {
         peek().register(name, variable);
     }
 
-    public boolean setVariable(Scope scope, List<String> nameList, Object variable) {
+    public boolean setVariable(ProcessUnit processUnit, Scope scope, List<String> nameList, Object variable) {
         if (scope == null) return false;
         Iterator<String> iterator = nameList.iterator();
         while (iterator.hasNext()) {
@@ -72,16 +74,18 @@ public class VariableRegister extends List<Scope> {
                 scope.register(name, variable);
                 return true;
             }
+            if (process instanceof Method) {
+                process = ((Method) process).run(processUnit, new List<>());
+            }
             if (process instanceof ScopeSupplier) {
                 scope = ((ScopeSupplier) process).getScope();
                 if (scope == null) break;
             }
-
         }
         return false;
     }
 
-    public Object getVariable(Scope scope, List<String> nameList) {
+    public Object getVariable(ProcessUnit processUnit, Scope scope, List<String> nameList) {
         if (scope == null) return null;
         Iterator<String> iterator = nameList.iterator();
         while (iterator.hasNext()) {
@@ -90,6 +94,9 @@ public class VariableRegister extends List<Scope> {
             if (!iterator.hasNext()) {
                 return process;
             }
+            if (process instanceof Method) {
+                process = ((Method) process).run(processUnit, new List<>());
+            }
             if (process instanceof ScopeSupplier) {
                 scope = ((ScopeSupplier) process).getScope();
                 if (scope == null) break;
@@ -97,6 +104,11 @@ public class VariableRegister extends List<Scope> {
 
         }
         return null;
+    }
+
+    protected Object workMethod(ProcessUnit unit, Object o) {
+        if (o instanceof Method) return ((Method) o).run(unit, new List<>());
+        else return o;
     }
 
 }

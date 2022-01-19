@@ -55,14 +55,14 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
         return string;
     }
 
-    protected void setVariable(VariableRegister register, List<String> nodes, Object process) {
-        if (beforeScope == null) register.setVariable(nodes, process);
-        else register.setVariable(beforeScope.getScope(), nodes, process);
+    protected void setVariable(ProcessUnit processUnit, VariableRegister register, List<String> nodes, Object process) {
+        if (beforeScope == null) register.setVariable(processUnit, nodes, process);
+        else register.setVariable(processUnit, beforeScope.getScope(), nodes, process);
     }
 
-    protected Object getVariable(VariableRegister register, List<String> nodes) {
-        if (beforeScope == null) return register.getVariable(nodes);
-        else return register.getVariable(beforeScope.getScope(), nodes);
+    protected Object getVariable(ProcessUnit processUnit, VariableRegister register, List<String> nodes) {
+        if (beforeScope == null) return register.getVariable(processUnit, nodes);
+        else return register.getVariable(processUnit, beforeScope.getScope(), nodes);
     }
 
     @Override
@@ -124,19 +124,19 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
     public void run(ProcessUnit processUnit) {
         VariableRegister scope = processUnit.getVariableRegister();
         if (params != null && body != null) {  //method body
-            scope.setVariable(nodes, this);
+            scope.setVariable(processUnit, nodes, this);
             parent = scope.peek();
         } else if (params == null && body != null && assignment == null) {  //class
             if (initialized) {
                 process.run(processUnit);
             } else {
                 initialized = true;
-                scope.setVariable(nodes, this);
+                scope.setVariable(processUnit, nodes, this);
                 body.setBeforeRun(() -> declaration.forEach(p -> p.run(processUnit)));
                 body.run(processUnit);
             }
         } else if (params != null) {  //method call
-            Object variable = getVariable(scope, nodes);
+            Object variable = getVariable(processUnit, scope, nodes);
             if (variable instanceof Method) {
                 List<Process<?>> paramsList = params.getProcesses();
                 paramsList.forEach(p -> p.run(processUnit));
@@ -149,24 +149,26 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                 } else this.result = result;
             }
         } else if (assignment != null) {  //assignment
-            Object variable = getVariable(scope, nodes);
+            Object variable = getVariable(processUnit, scope, nodes);
             assignment.run(processUnit);
             if (variable instanceof Method && !(variable instanceof VariableImpl)) {
                 if (assignment instanceof AbstractFront) {
                     ((Method) variable).run(processUnit, ((AbstractFront) assignment).getProcesses());
+                }  else if (assignment instanceof Method) {
+                    ((Method) variable).run(processUnit, new List<>(Collections.singletonList(assignment.get())));
                 } else ((Method) variable).run(processUnit, new List<>(Collections.singletonList(assignment)));
             } else if (assignment instanceof Method) {
                 result = assignment.get();
-                setVariable(scope, nodes, result);
+                setVariable(processUnit, scope, nodes, result);
             } else {
                 result = assignment;
-                setVariable(scope, nodes, result);
+                setVariable(processUnit, scope, nodes, result);
             }
         } else {  //variable
-            Object variable = getVariable(scope, nodes);
+            Object variable = getVariable(processUnit, scope, nodes);
             if (variable == null) result = new Null();
             else {
-                if (variable instanceof Method && !(variable instanceof VariableImpl)) {
+                if (variable instanceof Method) {
                     result = ((Method) variable).run(processUnit, new List<>());
                 } else result = variable;
             }
@@ -187,12 +189,12 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
     }
 
     @Override
-    public Object run(ProcessUnit processUnit, List<Process<?>> params) {
+    public Object run(ProcessUnit processUnit, List<?> params) {
+        if (body == null || this.params == null && assignment == null) return this;
         VariableRegister scope = processUnit.getVariableRegister();
-        params.forEach(p -> p.run(processUnit));
         if (args.size() <= params.size()) {
             body.setBeforeRun(
-                    () -> IntStream.range(0, args.size()).forEach(i -> scope.setVariable(args.get(i), params.get(i))));
+                    () -> IntStream.range(0, args.size()).forEach(i -> scope.setVariable(processUnit, args.get(i), params.get(i))));
         }
         scope.add(parent);
         body.run(processUnit);

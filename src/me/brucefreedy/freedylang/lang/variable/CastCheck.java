@@ -6,10 +6,8 @@ import me.brucefreedy.freedylang.lang.Process;
 @FunctionalInterface
 public interface CastCheck<T extends AbstractVar<?>> {
     boolean instof(Object o);
-    default T cast(List<Process<?>> params) {
-        Process<?> first = params.first();
-        if (first == null) return null;
-        Object o = first.get();
+    default T cast(List<?> params) {
+        Object o = params.first();
         if (instof(o)) return (T) o;
         else return null;
     }
