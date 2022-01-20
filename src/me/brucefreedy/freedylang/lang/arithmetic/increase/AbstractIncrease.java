@@ -1,5 +1,6 @@
 package me.brucefreedy.freedylang.lang.arithmetic.increase;
 
+import me.brucefreedy.freedylang.lang.ParseUnit;
 import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.abst.StealerImpl;
@@ -11,8 +12,14 @@ public abstract class AbstractIncrease extends StealerImpl<Object> {
     Number number;
 
     @Override
+    public void parse(ParseUnit parseUnit) {
+        addStealer(parseUnit);
+    }
+
+    @Override
     public void run(ProcessUnit processUnit) {
         if (!workIncrease(processUnit, a)) workIncrease(processUnit, process);
+        else process.run(processUnit);
     }
 
     protected boolean workIncrease(ProcessUnit unit, Process<?> p) {
