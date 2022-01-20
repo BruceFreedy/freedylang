@@ -5,8 +5,8 @@ import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
 import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 
-@Processable(alias = "millisec")
-public class Millisec extends ProcessImpl<Number> {
+@Processable(alias = "nanotime")
+public class NanoTime extends ProcessImpl<Number> {
     @Override
     public Number get() {
         return getTime();
@@ -17,6 +17,6 @@ public class Millisec extends ProcessImpl<Number> {
     }
 
     protected SimpleNumber getTime() {
-        return new SimpleNumber(System.currentTimeMillis());
+        return new SimpleNumber(System.nanoTime());
     }
 }

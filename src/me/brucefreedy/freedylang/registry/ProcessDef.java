@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.brucefreedy.freedylang.impl.ConsoleLogging;
 import me.brucefreedy.freedylang.impl.Millisec;
+import me.brucefreedy.freedylang.impl.NanoTime;
 import me.brucefreedy.freedylang.impl.TestCode;
 import me.brucefreedy.freedylang.lang.Breaker;
 import me.brucefreedy.freedylang.lang.Process;
@@ -76,6 +77,7 @@ public enum     ProcessDef {
     DECREMENT(DecrementImpl::new),
     FOR(ForImpl::new),
     MILLI_SEC(Millisec::new),
+    NANO_TIME(NanoTime::new),
     ;
     private final Supplier<Process<?>> processSupplier;
 }
