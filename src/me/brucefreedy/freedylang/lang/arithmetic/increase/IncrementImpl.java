@@ -4,7 +4,7 @@ import me.brucefreedy.freedylang.lang.Processable;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
 import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 
-@Processable(alias = "++")
+@Processable(alias = "++", regex = true)
 public class IncrementImpl extends AbstractIncrease {
     @Override
     public Number increase(Number number) {
