@@ -21,6 +21,7 @@ public abstract class AbstractIncrease extends StealerImpl<Object> {
     public void run(ProcessUnit processUnit) {
         if (running) return;
         running = true;
+        number = null;
         if (!workIncrease(processUnit, a)) workIncrease(processUnit, process);
         else process.run(processUnit);
         running = false;
@@ -44,4 +45,11 @@ public abstract class AbstractIncrease extends StealerImpl<Object> {
         if (number == null) return new SimpleNumber(0);
         return number.get();
     }
+
+    @Override
+    public String toString() {
+        if (number == null) return super.toString();
+        else return number.toString();
+    }
+
 }
