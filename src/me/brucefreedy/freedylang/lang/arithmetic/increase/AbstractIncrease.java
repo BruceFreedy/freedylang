@@ -14,6 +14,7 @@ public abstract class AbstractIncrease extends StealerImpl<Object> {
 
     @Override
     public void parse(ParseUnit parseUnit) {
+        super.parse(parseUnit);
         addStealer(parseUnit);
     }
 
