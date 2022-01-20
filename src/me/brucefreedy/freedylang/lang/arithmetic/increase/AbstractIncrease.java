@@ -3,6 +3,7 @@ package me.brucefreedy.freedylang.lang.arithmetic.increase;
 import me.brucefreedy.freedylang.lang.ParseUnit;
 import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.ProcessUnit;
+import me.brucefreedy.freedylang.lang.abst.Null;
 import me.brucefreedy.freedylang.lang.abst.StealerImpl;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
 import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
@@ -42,7 +43,7 @@ public abstract class AbstractIncrease extends StealerImpl<Object> {
 
     @Override
     public Object get() {
-        if (number == null) return new SimpleNumber(0);
+        if (number == null) return new Null();
         return number.get();
     }
 
