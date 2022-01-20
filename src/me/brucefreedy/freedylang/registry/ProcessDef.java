@@ -20,6 +20,7 @@ import me.brucefreedy.freedylang.lang.comment.MultiComment;
 import me.brucefreedy.freedylang.lang.comment.SingleComment;
 import me.brucefreedy.freedylang.lang.control.branch.ReturnImpl;
 import me.brucefreedy.freedylang.lang.control.conditional.*;
+import me.brucefreedy.freedylang.lang.control.iteration.ForImpl;
 import me.brucefreedy.freedylang.lang.control.iteration.WhileImpl;
 import me.brucefreedy.freedylang.lang.quotation.DoubleQuotation;
 import me.brucefreedy.freedylang.lang.quotation.SingleQuotation;
@@ -72,6 +73,7 @@ public enum     ProcessDef {
     NEW(SimpleInstance::new),
     INCREMENT(IncrementImpl::new),
     DECREMENT(DecrementImpl::new),
+    FOR(ForImpl::new),
     ;
     private final Supplier<Process<?>> processSupplier;
 }
