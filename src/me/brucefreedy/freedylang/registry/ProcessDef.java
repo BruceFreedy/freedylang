@@ -3,6 +3,7 @@ package me.brucefreedy.freedylang.registry;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.brucefreedy.freedylang.impl.ConsoleLogging;
+import me.brucefreedy.freedylang.impl.Millisec;
 import me.brucefreedy.freedylang.impl.TestCode;
 import me.brucefreedy.freedylang.lang.Breaker;
 import me.brucefreedy.freedylang.lang.Process;
@@ -74,6 +75,7 @@ public enum     ProcessDef {
     INCREMENT(IncrementImpl::new),
     DECREMENT(DecrementImpl::new),
     FOR(ForImpl::new),
+    MILLI_SEC(Millisec::new),
     ;
     private final Supplier<Process<?>> processSupplier;
 }
