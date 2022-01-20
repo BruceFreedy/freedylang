@@ -21,7 +21,7 @@ public class ForImpl extends ProcessImpl<ForImpl> {
             if (processes.size() != 3) return;
             processes.get(0).run(processUnit);
             Process<?> cond = processes.get(1);
-            Process<?> incre = processes.get(1);
+            Process<?> incre = processes.get(2);
             Supplier<Boolean> runnable = () -> {
                 cond.run(processUnit);
                 return cond.get() instanceof True;
