@@ -24,8 +24,10 @@ repositories {
     mavenCentral()
 }
 
+ext.module = () -> dependencies.implementation(rootProject.fileTree(dir: 'libs', include: ['*.jar']))
+
 dependencies {
-    implementation rootProject.fileTree(dir: 'libs', include: ['*.jar'])
+    module
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
