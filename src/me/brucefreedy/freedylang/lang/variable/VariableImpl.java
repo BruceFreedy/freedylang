@@ -56,12 +56,12 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
         return string;
     }
 
-    protected void setVariable(ProcessUnit processUnit, VariableRegister register, List<String> nodes, Object process) {
+    public void setVariable(ProcessUnit processUnit, VariableRegister register, List<String> nodes, Object process) {
         if (beforeScope == null) register.setVariable(processUnit, nodes, process);
         else register.setVariable(processUnit, beforeScope.getScope(), nodes, process);
     }
 
-    protected Object getVariable(ProcessUnit processUnit, VariableRegister register, List<String> nodes) {
+    public Object getVariable(ProcessUnit processUnit, VariableRegister register, List<String> nodes) {
         if (beforeScope == null) return register.getVariable(processUnit, nodes);
         else return register.getVariable(processUnit, beforeScope.getScope(), nodes);
     }

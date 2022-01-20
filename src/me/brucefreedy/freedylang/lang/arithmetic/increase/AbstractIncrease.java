@@ -5,6 +5,7 @@ import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.abst.Null;
 import me.brucefreedy.freedylang.lang.abst.StealerImpl;
+import me.brucefreedy.freedylang.lang.variable.VariableImpl;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
 import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 
@@ -31,10 +32,14 @@ public abstract class AbstractIncrease extends StealerImpl<Object> {
 
     protected boolean workIncrease(ProcessUnit unit, Process<?> p) {
         p.run(unit);
-        Object o = p.get();
-        if (o instanceof Number) {
-            number = increase((Number) o);
-            return true;
+        if (p instanceof VariableImpl) {
+            Object o = p.get();
+            if (o instanceof Number) {
+                VariableImpl variableImpl = (VariableImpl) p;
+                Number increase = increase((Number) o);
+                variableImpl.setVariable(unit, unit.getVariableRegister(), variableImpl.getNodes(), increase);
+                return true;
+            }
         }
         return false;
     }
