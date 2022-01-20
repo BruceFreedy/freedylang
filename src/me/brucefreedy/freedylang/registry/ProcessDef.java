@@ -8,6 +8,8 @@ import me.brucefreedy.freedylang.lang.Breaker;
 import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.Skipper;
 import me.brucefreedy.freedylang.lang.arithmetic.Arithmetic;
+import me.brucefreedy.freedylang.lang.arithmetic.increase.DecrementImpl;
+import me.brucefreedy.freedylang.lang.arithmetic.increase.IncrementImpl;
 import me.brucefreedy.freedylang.lang.body.brace.EndBrace;
 import me.brucefreedy.freedylang.lang.body.brace.FrontBrace;
 import me.brucefreedy.freedylang.lang.body.bracket.EndBracket;
@@ -68,6 +70,8 @@ public enum     ProcessDef {
     MULTI_COMMENT(MultiComment::new),
     WHILE(WhileImpl::new),
     NEW(SimpleInstance::new),
+    INCREMENT(IncrementImpl::new),
+    DECREMENT(DecrementImpl::new),
     ;
     private final Supplier<Process<?>> processSupplier;
 }
