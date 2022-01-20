@@ -45,23 +45,31 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
     }
 
     protected Method doubleValue(Consumer<Double> setter, Supplier<Double> getter) {
-        return method(setter, getter, java.lang.Number::doubleValue, this::number);
+        return number(setter, getter, java.lang.Number::doubleValue);
     }
 
     protected Method floatValue(Consumer<Float> setter, Supplier<Float> getter) {
-        return method(setter, getter, java.lang.Number::floatValue, this::number);
+        return number(setter, getter, java.lang.Number::floatValue);
     }
 
     protected Method longValue(Consumer<Long> setter, Supplier<Long> getter) {
-        return method(setter, getter, java.lang.Number::longValue, this::number);
+        return number(setter, getter, java.lang.Number::longValue);
     }
 
     protected Method shortValue(Consumer<Short> setter, Supplier<Short> getter) {
-        return method(setter, getter, java.lang.Number::shortValue, this::number);
+        return number(setter, getter, java.lang.Number::shortValue);
     }
 
     protected Method intValue(Consumer<Integer> setter, Supplier<Integer> getter) {
-        return method(setter, getter, java.lang.Number::intValue, this::number);
+        return number(setter, getter, java.lang.Number::intValue);
+    }
+
+    protected <TYPE extends java.lang.Number> Method number(Consumer<TYPE> setter, Supplier<TYPE> getter, Function<java.lang.Number, TYPE> box) {
+        return number(i -> setter.accept(box.apply(i)), getter::get);
+    }
+
+    protected Method number(Consumer<java.lang.Number> setter, Supplier<java.lang.Number> getter) {
+        return method(o -> o instanceof Number, java.lang.Number.class, setter, () -> new SimpleNumber(getter.get()));
     }
 
     protected <TYPE, RETURN> Method method(Consumer<RETURN> setter, Supplier<RETURN> getter,
