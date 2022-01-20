@@ -6,7 +6,7 @@ import me.brucefreedy.freedylang.lang.abst.StealerImpl;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
 import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 
-public abstract class AbstractIncrease extends StealerImpl<Number> {
+public abstract class AbstractIncrease extends StealerImpl<Object> {
 
     Number number;
 
@@ -23,7 +23,7 @@ public abstract class AbstractIncrease extends StealerImpl<Number> {
     public abstract Number increase(Number number);
 
     @Override
-    public Number get() {
+    public Object get() {
         if (number == null) return new SimpleNumber(0);
         return number.get();
     }
