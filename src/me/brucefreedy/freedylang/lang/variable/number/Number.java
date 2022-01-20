@@ -1,20 +1,33 @@
 package me.brucefreedy.freedylang.lang.variable.number;
 
+import me.brucefreedy.freedylang.lang.ParseUnit;
+import me.brucefreedy.freedylang.lang.Process;
+import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
+import me.brucefreedy.freedylang.lang.abst.Stacker;
 import me.brucefreedy.freedylang.lang.control.conditional.Comparable;
+import me.brucefreedy.freedylang.lang.variable.AbstractVar;
 
-public abstract class Number extends ProcessImpl<Object> implements Comparable {
+public abstract class Number extends AbstractVar<java.lang.Number> implements Process<Object>, Comparable, Stacker<Object> {
 
-    protected java.lang.Number number;
+    protected Process<?> process;
+
+    public Number() {
+        super(null);
+    }
+
+    public Number(java.lang.Number object) {
+        super(object);
+    }
 
     protected void setNumber(java.lang.Number number) {
-        this.number = number;
+        this.object = number;
     }
 
     public java.lang.Number getNumber() {
-        if (number == null) return null;
-        if (number.intValue() == number.doubleValue()) this.number = number.intValue();
-        return number;
+        if (object == null) return null;
+        if (object.intValue() == object.doubleValue()) this.object = object.intValue();
+        return object;
     }
 
     @Override
@@ -25,10 +38,10 @@ public abstract class Number extends ProcessImpl<Object> implements Comparable {
     @Override
     public int compare(Object o) {
         try {
-            double d1 = number.doubleValue();
+            double d1 = object.doubleValue();
             double d2;
             if (o instanceof Number) {
-                d2 = ((Number) o).number.doubleValue();
+                d2 = ((Number) o).object.doubleValue();
             } else if (o instanceof String) {
                 d2 = Double.parseDouble(((String) o));
             } else d2 = 0;
@@ -41,10 +54,10 @@ public abstract class Number extends ProcessImpl<Object> implements Comparable {
     @Override
     public boolean equals(Object o) {
         try {
-            double d1 = number.doubleValue();
+            double d1 = object.doubleValue();
             double d2;
             if (o instanceof Number) {
-                d2 = ((Number) o).number.doubleValue();
+                d2 = ((Number) o).object.doubleValue();
             } else if (o instanceof String) {
                 d2 = Double.parseDouble(((String) o));
             } else d2 = 0;
@@ -55,7 +68,22 @@ public abstract class Number extends ProcessImpl<Object> implements Comparable {
     }
 
     @Override
+    public void parse(ParseUnit parseUnit) {
+        process = Process.parsing(parseUnit);
+    }
+
+    @Override
+    public void run(ProcessUnit processUnit) {
+        process.run(processUnit);
+    }
+
+    @Override
+    public Process<?> getProcess() {
+        return process;
+    }
+
+    @Override
     public Object get() {
-        return new SimpleNumber(number);
+        return new SimpleNumber(object);
     }
 }

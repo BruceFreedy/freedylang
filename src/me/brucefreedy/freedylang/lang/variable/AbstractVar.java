@@ -8,6 +8,7 @@ import me.brucefreedy.freedylang.lang.abst.Null;
 import me.brucefreedy.freedylang.lang.scope.Scope;
 import me.brucefreedy.freedylang.lang.scope.ScopeSupplier;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
+import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -63,7 +64,7 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
         return method(setter, getter, java.lang.Number::intValue, this::number);
     }
 
-    protected  <TYPE, RETURN> Method method(Consumer<RETURN> setter, Supplier<RETURN> getter,
+    protected <TYPE, RETURN> Method method(Consumer<RETURN> setter, Supplier<RETURN> getter,
                                            Function<TYPE, RETURN> function, Function<List<?>, TYPE> func2) {
         return (processUnit, list) -> {
             TYPE apply = func2.apply(list);

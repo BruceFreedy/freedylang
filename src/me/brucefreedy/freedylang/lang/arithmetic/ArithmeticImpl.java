@@ -58,7 +58,7 @@ public abstract class ArithmeticImpl extends Number implements Stealer<Object>, 
                 next.a = this;
                 next.run(processUnit);
                 next.a = b;
-                number = next.number;
+                object = next.object;
             } else {
                 next.run(processUnit);
                 work(processUnit, a, next);
@@ -97,13 +97,13 @@ public abstract class ArithmeticImpl extends Number implements Stealer<Object>, 
 
     @Override
     public Object get() {
-        if (number == null) return a.toString() + (next == null ? b.toString() : next.toString());
-        else return new SimpleNumber(this.number);
+        if (object == null) return a.toString() + (next == null ? b.toString() : next.toString());
+        else return new SimpleNumber(this.object);
     }
 
     @Override
     public String toString() {
-        if (number == null) return a.toString() + (next == null ? b.toString() : next.toString());
+        if (object == null) return a.toString() + (next == null ? b.toString() : next.toString());
         else return super.toString();
     }
 

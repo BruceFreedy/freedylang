@@ -1,7 +1,4 @@
+i = 2
+log (get+100)
 
-class Test {
-    a() {return Test}
-}
-
-    log 'aaaa'
-    log Test.a.a.a.a.a
+get() {return 10}
