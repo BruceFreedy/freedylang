@@ -12,11 +12,12 @@ public abstract class AbstractIncrease extends StealerImpl<Object> {
 
     @Override
     public void run(ProcessUnit processUnit) {
-        if (!workIncrease(a)) workIncrease(process);
+        if (!workIncrease(processUnit, a)) workIncrease(processUnit, process);
     }
 
-    protected boolean workIncrease(Process<?> p) {
+    protected boolean workIncrease(ProcessUnit unit, Process<?> p) {
         if (p == null) return false;
+        p.run(unit);
         Object o = p.get();
         if (o instanceof Number) {
             number = increase((Number) o);
