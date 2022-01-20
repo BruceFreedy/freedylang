@@ -3,7 +3,7 @@ package me.brucefreedy.freedylang.lang.variable.number;
 import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
 import me.brucefreedy.freedylang.lang.control.conditional.Comparable;
 
-public abstract class Number extends ProcessImpl<Number> implements Comparable {
+public abstract class Number extends ProcessImpl<Object> implements Comparable {
 
     protected java.lang.Number number;
 
@@ -55,7 +55,7 @@ public abstract class Number extends ProcessImpl<Number> implements Comparable {
     }
 
     @Override
-    public Number get() {
+    public Object get() {
         return new SimpleNumber(number);
     }
 }

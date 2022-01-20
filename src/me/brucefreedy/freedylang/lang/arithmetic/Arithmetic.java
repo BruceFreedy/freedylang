@@ -5,7 +5,7 @@ import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.Processable;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
 
-public interface Arithmetic extends Process<Number> {
+public interface Arithmetic extends Process<Object> {
     java.lang.Number operate(java.lang.Number a, java.lang.Number b);
     Seq getSeq();
 
