@@ -10,6 +10,7 @@ import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 public abstract class AbstractIncrease extends StealerImpl<Object> {
 
     Number number;
+    boolean running;
 
     @Override
     public void parse(ParseUnit parseUnit) {
@@ -18,8 +19,11 @@ public abstract class AbstractIncrease extends StealerImpl<Object> {
 
     @Override
     public void run(ProcessUnit processUnit) {
+        if (running) return;
+        running = true;
         if (!workIncrease(processUnit, a)) workIncrease(processUnit, process);
         else process.run(processUnit);
+        running = false;
     }
 
     protected boolean workIncrease(ProcessUnit unit, Process<?> p) {
