@@ -29,7 +29,6 @@ public abstract class AbstractIncrease extends StealerImpl<Object> {
     }
 
     protected boolean workIncrease(ProcessUnit unit, Process<?> p) {
-        if (p == null) return false;
         p.run(unit);
         Object o = p.get();
         if (o instanceof Number) {
