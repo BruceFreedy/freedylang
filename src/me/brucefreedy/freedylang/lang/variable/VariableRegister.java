@@ -93,6 +93,7 @@ public class VariableRegister extends List<Scope> {
         while (iterator.hasNext()) {
             String name = iterator.next();
             Object process = scope.getRegistry(name);
+            if (process == null) return false;
             if (!iterator.hasNext()) {
                 scope.register(name, variable);
                 return true;
@@ -114,6 +115,7 @@ public class VariableRegister extends List<Scope> {
         while (iterator.hasNext()) {
             String name = iterator.next();
             Object process = scope.getRegistry(name);
+            if (process == null) return null;
             if (!iterator.hasNext()) {
                 return process;
             }
