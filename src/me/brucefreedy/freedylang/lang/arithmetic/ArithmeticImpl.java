@@ -98,7 +98,14 @@ public abstract class ArithmeticImpl extends Number implements Stealer<Object>, 
 
     @Override
     public Object get() {
-        if (object == null) return new SimpleText((this == a ? "" : a.toString()) + (next == null ? b.toString() : next.toString()));
+//        if (object == null) return new SimpleText(a.toString() + (next == null ? b.toString() : next.toString()));
+        if (object == null) {
+            if (next == null) {
+                return new SimpleText(a.toString() + b.toString());
+            } else {
+                return new SimpleText(a.toString() + next.toString());
+            }
+        }
         else return new SimpleNumber(this.object);
     }
 
