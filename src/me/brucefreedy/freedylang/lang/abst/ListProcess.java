@@ -1,5 +1,6 @@
 package me.brucefreedy.freedylang.lang.abst;
 
+import lombok.Setter;
 import me.brucefreedy.common.List;
 import me.brucefreedy.freedylang.lang.Cover;
 import me.brucefreedy.freedylang.lang.Process;
@@ -14,6 +15,7 @@ import java.util.function.Consumer;
  */
 public class ListProcess extends AbstractVar<List<Process<?>>> {
 
+    @Setter
     protected Consumer<List<Process<?>>> sync = p -> {};
 
     public ListProcess() {
