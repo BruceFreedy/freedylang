@@ -3,6 +3,7 @@ package me.brucefreedy.freedylang.lang.arithmetic;
 import me.brucefreedy.freedylang.lang.ParseUnit;
 import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.ProcessUnit;
+import me.brucefreedy.freedylang.lang.abst.Null;
 import me.brucefreedy.freedylang.lang.abst.Stacker;
 import me.brucefreedy.freedylang.lang.abst.Stealer;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
@@ -98,13 +99,9 @@ public abstract class ArithmeticImpl extends Number implements Stealer<Object>, 
 
     @Override
     public Object get() {
-//        if (object == null) return new SimpleText(a.toString() + (next == null ? b.toString() : next.toString()));
         if (object == null) {
-            if (next == null) {
-                return new SimpleText(a.toString() + b.toString());
-            } else {
-                return new SimpleText(a.toString() + next.toString());
-            }
+            if (running) return new Null();
+            return new SimpleText(a.toString() + (next == null ? b.toString() : next.toString()));
         }
         else return new SimpleNumber(this.object);
     }
