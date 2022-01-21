@@ -15,9 +15,9 @@ public abstract class AbstractQuotation extends Text {
         String source = parseUnit.getSource();
         String quotation = getQuotation();
         int index = source.indexOf(quotation);
-        if (index == -1) stringValue = "";
+        if (index == -1) object = "";
         else {
-            stringValue = source.substring(0, index);
+            object = source.substring(0, index);
             parseUnit.setSource(source.substring(Math.min(source.length(), index + quotation.length())));
         }
         super.parse(parseUnit);
