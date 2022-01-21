@@ -158,6 +158,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                 }  else if (assignment instanceof Method) {
                     ((Method) variable).run(processUnit, new List<>(Collections.singletonList(assignment.get())));
                 } else ((Method) variable).run(processUnit, new List<>(Collections.singletonList(assignment)));
+                result = this;
             } else if (assignment instanceof Method) {
                 result = assignment.get();
                 setVariable(processUnit, scope, nodes, result);
