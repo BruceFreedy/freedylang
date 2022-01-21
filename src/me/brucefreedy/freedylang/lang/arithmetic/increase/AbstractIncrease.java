@@ -1,12 +1,16 @@
 package me.brucefreedy.freedylang.lang.arithmetic.increase;
 
+import me.brucefreedy.common.List;
 import me.brucefreedy.freedylang.lang.ParseUnit;
 import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.ProcessUnit;
+import me.brucefreedy.freedylang.lang.abst.Method;
 import me.brucefreedy.freedylang.lang.abst.Null;
 import me.brucefreedy.freedylang.lang.abst.StealerImpl;
 import me.brucefreedy.freedylang.lang.variable.VariableImpl;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
+
+import java.util.Collections;
 
 public abstract class AbstractIncrease extends StealerImpl<Object> {
 
@@ -32,12 +36,13 @@ public abstract class AbstractIncrease extends StealerImpl<Object> {
     protected boolean workIncrease(ProcessUnit unit, Process<?> p) {
         p.run(unit);
         if (p instanceof VariableImpl) {
+            VariableImpl variableImpl = (VariableImpl) p;
             Object o = p.get();
             if (o instanceof Number) {
-                VariableImpl variableImpl = (VariableImpl) p;
                 Number increase = increase((Number) o);
-                System.out.println("LOG: " + variableImpl.getNodes());
-                variableImpl.setVariable(unit, unit.getVariableRegister(), variableImpl.getNodes(), increase);
+                Object variable = variableImpl.getVariable(unit, unit.getVariableRegister(), variableImpl.getNodes());
+                if (variable instanceof Method) ((Method) variable).run(unit, new List<>(Collections.singletonList(increase)));
+                else variableImpl.setVariable(unit, unit.getVariableRegister(), variableImpl.getNodes(), increase);
                 return true;
             }
         }
