@@ -75,7 +75,6 @@ public interface Arithmetic extends Process<Object> {
 
         @Override
         protected void setNumber(java.lang.Number number) {
-            System.out.println("log: " + disabled);
             if (disabled) super.setNumber(number.doubleValue() * -1);
             else super.setNumber(number);
         }

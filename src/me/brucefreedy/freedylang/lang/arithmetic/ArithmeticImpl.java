@@ -27,6 +27,7 @@ public abstract class ArithmeticImpl extends Number implements Stealer<Object>, 
     public void parse(ParseUnit parseUnit) {
         super.parse(parseUnit);
         b = process;
+        if (a == null) disabled = true;
         if (b instanceof ArithmeticImpl) {
             ArithmeticImpl b = (ArithmeticImpl) this.b;
             b.disabled = true;
