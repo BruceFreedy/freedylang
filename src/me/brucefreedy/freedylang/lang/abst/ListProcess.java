@@ -7,21 +7,34 @@ import me.brucefreedy.freedylang.lang.variable.AbstractVar;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
 import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 
+import java.util.function.Consumer;
+
 /**
  * process that contains list of processes
  */
-public abstract class ListProcess extends AbstractVar<List<Process<?>>> {
+public class ListProcess extends AbstractVar<List<Process<?>>> {
+
+    protected Consumer<List<Process<?>>> sync = p -> {};
 
     public ListProcess() {
-        super(new List<>());
+        this(new List<>());
+    }
+
+    public ListProcess(List<Process<?>> list) {
+        super(list);
         register("add", (Method) (processUnit, params) -> {
             for (Object o : params) {
                 if (o instanceof Process<?>) object.add(((Process<?>) o));
                 else object.add(new Cover(o));
+                sync.accept(object);
             }
             return object;
         });
-        register("remove", (Method) (processUnit, params) -> object.removeAll(params));
+        register("remove", (Method) (processUnit, params) -> {
+            object.removeAll(params);
+            sync.accept(object);
+            return new Null();
+        });
         register("size", (Method) (unit, params) -> new SimpleNumber(object.size()));
         register("get", (Method) (unit, params) -> {
             Object first = params.first();

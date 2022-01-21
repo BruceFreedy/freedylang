@@ -2,12 +2,15 @@ package me.brucefreedy.freedylang.lang.variable;
 
 import lombok.Getter;
 import me.brucefreedy.common.List;
+import me.brucefreedy.freedylang.lang.ParseUnit;
 import me.brucefreedy.freedylang.lang.Process;
+import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.abst.Method;
 import me.brucefreedy.freedylang.lang.abst.Null;
 import me.brucefreedy.freedylang.lang.abst.Text;
 import me.brucefreedy.freedylang.lang.scope.Scope;
 import me.brucefreedy.freedylang.lang.scope.ScopeSupplier;
+import me.brucefreedy.freedylang.lang.variable.bool.Bool;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
 import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 import me.brucefreedy.freedylang.lang.variable.text.SimpleText;
@@ -44,6 +47,10 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
 
     protected Method stringValue(Consumer<String> setter, Supplier<String> getter) {
         return method(o -> o instanceof Text, String.class, setter, getter::get);
+    }
+
+    protected Method boolValue(Consumer<Boolean> setter, Supplier<Boolean> getter) {
+        return method(o -> o instanceof Bool, Boolean.class, setter, () -> Bool.get(getter.get()));
     }
 
     protected Method doubleValue(Consumer<Double> setter, Supplier<Double> getter) {

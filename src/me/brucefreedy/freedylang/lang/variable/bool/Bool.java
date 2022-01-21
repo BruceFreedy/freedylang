@@ -1,8 +1,23 @@
 package me.brucefreedy.freedylang.lang.variable.bool;
 
+import me.brucefreedy.freedylang.lang.variable.AbstractVar;
+
 import java.util.function.Predicate;
 
-public abstract class Bool implements Predicate<Object> {
+public abstract class Bool extends AbstractVar<Boolean> implements Predicate<Object> {
+
+    public Bool() {
+        super(null);
+    }
+
+    @Override
+    public Boolean getObject() {
+        return getValue();
+    }
+
+    public Bool(Boolean object) {
+        super(object);
+    }
 
     public static Bool get(boolean bool) {
         if (bool) return new True();
