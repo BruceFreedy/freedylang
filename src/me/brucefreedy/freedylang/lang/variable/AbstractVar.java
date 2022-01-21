@@ -5,10 +5,12 @@ import me.brucefreedy.common.List;
 import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.abst.Method;
 import me.brucefreedy.freedylang.lang.abst.Null;
+import me.brucefreedy.freedylang.lang.abst.Text;
 import me.brucefreedy.freedylang.lang.scope.Scope;
 import me.brucefreedy.freedylang.lang.scope.ScopeSupplier;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
 import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
+import me.brucefreedy.freedylang.lang.variable.text.SimpleText;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -41,7 +43,7 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
     }
 
     protected Method stringValue(Consumer<String> setter, Supplier<String> getter) {
-        return method(setter, getter, o -> o, Object::toString);
+        return method(o -> o instanceof Text, String.class, setter, getter::get);
     }
 
     protected Method doubleValue(Consumer<Double> setter, Supplier<Double> getter) {
