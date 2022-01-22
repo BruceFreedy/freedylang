@@ -39,6 +39,7 @@ public abstract class ArithmeticImpl extends Number implements Stealer<Object>, 
             if (stacker instanceof ArithmeticImpl) {
                 next = ((ArithmeticImpl) stacker);
                 next.a = b;
+                next.disabled = false;
                 parseUnit.popPeek();
             }
         }
