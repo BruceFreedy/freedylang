@@ -107,4 +107,14 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
         };
     }
 
+    protected Method voidFunc(Consumer<List<?>> consumer) {
+        return (unit, params) -> {
+            try {
+                consumer.accept(params);
+            } catch (Exception ignored) {
+            }
+            return new Null();
+        };
+    }
+
 }

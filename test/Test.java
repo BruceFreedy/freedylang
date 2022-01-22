@@ -2,7 +2,6 @@ import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.registry.ProcessRegister;
 import me.brucefreedy.freedylang.registry.ProcessUtils;
-import net.jafama.FastMath;
 
 import java.nio.file.Paths;
 
