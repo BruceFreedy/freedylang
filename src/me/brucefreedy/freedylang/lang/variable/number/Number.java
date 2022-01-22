@@ -7,6 +7,7 @@ import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
 import me.brucefreedy.freedylang.lang.abst.Stacker;
 import me.brucefreedy.freedylang.lang.control.conditional.Comparable;
 import me.brucefreedy.freedylang.lang.variable.AbstractVar;
+import me.brucefreedy.freedylang.lang.variable.Member;
 
 public abstract class Number extends AbstractVar<java.lang.Number> implements Process<Object>, Comparable, Stacker<Object> {
 
