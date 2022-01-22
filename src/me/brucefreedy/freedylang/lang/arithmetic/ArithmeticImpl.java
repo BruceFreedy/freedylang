@@ -28,6 +28,7 @@ public abstract class ArithmeticImpl extends Number implements Stealer<Object>, 
     public void parse(ParseUnit parseUnit) {
         process = Process.parsing(parseUnit);
         b = process;
+        if (a == null) disabled = true;
         if (b instanceof ArithmeticImpl) {
             ArithmeticImpl b = (ArithmeticImpl) this.b;
             b.disabled = true;
@@ -42,7 +43,6 @@ public abstract class ArithmeticImpl extends Number implements Stealer<Object>, 
                 parseUnit.popPeek();
             }
         }
-        if (a == null) disabled = true;
         parseUnit.add(this);
     }
 
