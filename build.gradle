@@ -10,7 +10,6 @@ buildscript {
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: "java"
 apply plugin: "java-library"
-apply plugin: "maven-publish"
 
 sourceCompatibility = 1.8
 version = 1.0
@@ -24,11 +23,9 @@ repositories {
     mavenCentral()
 }
 
-ext.module = () -> dependencies.implementation(rootProject.fileTree(dir: 'libs', include: ['*.jar']))
-
+ext.libs = ext.libs == null ? null : dependencies.implementation(project.fileTree(dir: 'libs', include: ['*.jar']))
 dependencies {
-    module
-
+    libs
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
