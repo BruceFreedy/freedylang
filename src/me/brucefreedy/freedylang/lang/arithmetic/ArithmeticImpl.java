@@ -48,7 +48,6 @@ public abstract class ArithmeticImpl extends Number implements Stealer<Object>, 
     @Override
     public void run(ProcessUnit processUnit) {
         if (running) return;
-        System.out.println(disabled);
         running = true;
         if (disabled) {
             b.run(processUnit);
