@@ -5,6 +5,7 @@ import me.brucefreedy.common.List;
 import me.brucefreedy.freedylang.lang.Cover;
 import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.variable.AbstractVar;
+import me.brucefreedy.freedylang.lang.variable.bool.Bool;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
 import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 
@@ -56,6 +57,7 @@ public class ListProcess extends AbstractVar<List<Process<?>>> {
             }
             return new SimpleNumber(object.size());
         });
+        register("contains", (Method) (unit, params) -> Bool.get(object.contains(params.first())));
     }
 
     public List<Process<?>> getProcesses() {

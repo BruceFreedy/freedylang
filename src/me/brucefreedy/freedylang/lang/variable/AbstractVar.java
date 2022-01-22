@@ -15,6 +15,7 @@ import me.brucefreedy.freedylang.lang.variable.number.Number;
 import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 import me.brucefreedy.freedylang.lang.variable.text.SimpleText;
 
+import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -37,6 +38,13 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
     @Override
     public Scope getScope() {
         return scope;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (super.equals(o)) return true;
+        if (o instanceof AbstractVar) return object.equals(((AbstractVar<?>) o).object);
+        else return super.equals(o);
     }
 
     public Scope register(String name, Object var) {

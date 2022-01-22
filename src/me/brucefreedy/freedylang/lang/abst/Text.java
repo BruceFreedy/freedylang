@@ -45,4 +45,10 @@ public abstract class Text extends AbstractVar<String> implements Process<String
         return object;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (super.equals(o)) return true;
+        return toString().equals(o);
+    }
+
 }
