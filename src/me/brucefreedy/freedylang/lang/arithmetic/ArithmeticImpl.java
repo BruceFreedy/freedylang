@@ -21,7 +21,7 @@ public abstract class ArithmeticImpl extends Number implements Stealer<Object>, 
     @Override
     public void setProcess(Process<?> process) {
         a = process;
-        disabled = false;
+        if (a != this) disabled = false;
     }
 
     @Override
