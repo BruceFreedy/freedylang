@@ -20,6 +20,7 @@ public abstract class ArithmeticImpl extends Number implements Stealer<Object>, 
 
     @Override
     public void setProcess(Process<?> process) {
+        if(this == process) disabled = true;
         a = process;
     }
 
@@ -27,7 +28,6 @@ public abstract class ArithmeticImpl extends Number implements Stealer<Object>, 
     public void parse(ParseUnit parseUnit) {
         process = Process.parsing(parseUnit);
         b = process;
-        if (a == null) disabled = true;
         if (b instanceof ArithmeticImpl) {
             ArithmeticImpl b = (ArithmeticImpl) this.b;
             b.disabled = true;
@@ -48,12 +48,19 @@ public abstract class ArithmeticImpl extends Number implements Stealer<Object>, 
     @Override
     public void run(ProcessUnit processUnit) {
         if (running) return;
+        System.out.println(disabled);
         running = true;
         if (disabled) {
             b.run(processUnit);
             Object o = b.get();
             if (o instanceof Number) {
                 setNumber(((Number) o).getNumber());
+            }
+            if (next != null) {
+                next.a = this;
+                next.run(processUnit);
+                next.a = b;
+                object = next.object;
             }
         } else if (next != null) {
             if (getSeq().compare(next.getSeq())) {
