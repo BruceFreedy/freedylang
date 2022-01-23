@@ -5,7 +5,7 @@ import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.Processable;
 import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
 
-@Processable(alias = "test")
+@Processable(alias = "testcode")
 public class TestCode extends ProcessImpl<TestCode> {
 
     @Override
