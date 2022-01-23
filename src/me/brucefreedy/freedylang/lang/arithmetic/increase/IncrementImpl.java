@@ -2,12 +2,12 @@ package me.brucefreedy.freedylang.lang.arithmetic.increase;
 
 import me.brucefreedy.freedylang.lang.Processable;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
-import me.brucefreedy.freedylang.lang.variable.number.AbstractNumber;
+import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 
 @Processable(alias = "++", regex = true)
 public class IncrementImpl extends AbstractIncrease {
     @Override
     public Number increase(Number number) {
-        return new AbstractNumber(number.getNumber().doubleValue() + 1);
+        return new SimpleNumber(number.getNumber().doubleValue() + 1);
     }
 }

@@ -4,8 +4,8 @@ import me.brucefreedy.freedylang.lang.ParseUnit;
 import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.variable.Member;
 
-public class AbstractNumber extends Number {
-    public AbstractNumber(java.lang.Number number) {
+public class SimpleNumber extends Number {
+    public SimpleNumber(java.lang.Number number) {
         setNumber(number);
     }
 
@@ -15,8 +15,8 @@ public class AbstractNumber extends Number {
         if (process instanceof Member) {
             process = Process.parsing(parseUnit);
             try {
-                if (process instanceof AbstractNumber) {
-                    AbstractNumber simpleNumber = (AbstractNumber) this.process;
+                if (process instanceof SimpleNumber) {
+                    SimpleNumber simpleNumber = (SimpleNumber) this.process;
                     object = object.doubleValue() + Double.parseDouble("." + simpleNumber.object.intValue());
                     process = simpleNumber.getProcess();
                 }

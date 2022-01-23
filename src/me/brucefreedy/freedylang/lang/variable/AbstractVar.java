@@ -9,7 +9,7 @@ import me.brucefreedy.freedylang.lang.scope.Scope;
 import me.brucefreedy.freedylang.lang.scope.ScopeSupplier;
 import me.brucefreedy.freedylang.lang.variable.bool.Bool;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
-import me.brucefreedy.freedylang.lang.variable.number.AbstractNumber;
+import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -80,7 +80,7 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
     }
 
     protected Method number(Consumer<java.lang.Number> setter, Supplier<java.lang.Number> getter) {
-        return method(o -> o instanceof Number, java.lang.Number.class, setter, () -> new AbstractNumber(getter.get()));
+        return method(o -> o instanceof Number, java.lang.Number.class, setter, () -> new SimpleNumber(getter.get()));
     }
 
     protected <TYPE, RETURN> Method method(Consumer<RETURN> setter, Supplier<RETURN> getter,

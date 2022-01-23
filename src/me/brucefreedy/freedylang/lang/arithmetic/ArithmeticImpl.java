@@ -7,8 +7,8 @@ import me.brucefreedy.freedylang.lang.abst.Null;
 import me.brucefreedy.freedylang.lang.abst.Stacker;
 import me.brucefreedy.freedylang.lang.abst.Stealer;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
-import me.brucefreedy.freedylang.lang.variable.number.AbstractNumber;
-import me.brucefreedy.freedylang.lang.variable.text.AbstractText;
+import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
+import me.brucefreedy.freedylang.lang.variable.text.SimpleText;
 
 public abstract class ArithmeticImpl extends Number implements Stealer<Object>, Arithmetic {
 
@@ -108,9 +108,9 @@ public abstract class ArithmeticImpl extends Number implements Stealer<Object>, 
     public Object get() {
         if (object == null) {
             if (running) return new Null();
-            return new AbstractText(a.toString() + (next == null ? b.toString() : next.toString()));
+            return new SimpleText(a.toString() + (next == null ? b.toString() : next.toString()));
         }
-        else return new AbstractNumber(this.object);
+        else return new SimpleNumber(this.object);
     }
 
     @Override

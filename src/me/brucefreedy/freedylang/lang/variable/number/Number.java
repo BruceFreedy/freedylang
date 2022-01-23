@@ -83,6 +83,6 @@ public abstract class Number extends SimpleVar<java.lang.Number> implements Proc
 
     @Override
     public Object get() {
-        return new AbstractNumber(object);
+        return new SimpleNumber(object);
     }
 }

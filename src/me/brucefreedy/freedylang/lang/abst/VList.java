@@ -6,7 +6,7 @@ import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.variable.SimpleVar;
 import me.brucefreedy.freedylang.lang.variable.bool.Bool;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
-import me.brucefreedy.freedylang.lang.variable.number.AbstractNumber;
+import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 
 import java.util.function.Consumer;
 
@@ -30,7 +30,7 @@ public abstract class VList<T> extends SimpleVar<List<T>> {
             sync.accept(object);
             return new Null();
         });
-        register("size", (Method) (unit, params) -> new AbstractNumber(object.size()));
+        register("size", (Method) (unit, params) -> new SimpleNumber(object.size()));
         register("get", (Method) (unit, params) -> {
             Object first = params.first();
             if (first instanceof Number) {
@@ -53,7 +53,7 @@ public abstract class VList<T> extends SimpleVar<List<T>> {
                     if (o instanceof Process<?>) ((Process<?>) o).run(unit);
                 }
             }
-            return new AbstractNumber(object.size());
+            return new SimpleNumber(object.size());
         });
         register("contains", (Method) (unit, params) -> Bool.get(object.contains(params.first())));
     }
