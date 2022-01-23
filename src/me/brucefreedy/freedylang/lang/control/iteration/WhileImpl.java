@@ -1,7 +1,6 @@
 package me.brucefreedy.freedylang.lang.control.iteration;
 
 import me.brucefreedy.freedylang.lang.ParseUnit;
-import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.Processable;
 import me.brucefreedy.freedylang.lang.abst.ProcessImpl;

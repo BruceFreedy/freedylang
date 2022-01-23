@@ -1,10 +1,10 @@
 package me.brucefreedy.freedylang.lang.variable.bool;
 
-import me.brucefreedy.freedylang.lang.variable.AbstractVar;
+import me.brucefreedy.freedylang.lang.variable.SimpleVar;
 
 import java.util.function.Predicate;
 
-public abstract class Bool extends AbstractVar<Boolean> implements Predicate<Object> {
+public abstract class Bool extends SimpleVar<Boolean> implements Predicate<Object> {
 
     public Bool() {
         super(null);

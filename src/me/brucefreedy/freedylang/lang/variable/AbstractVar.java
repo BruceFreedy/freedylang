@@ -2,9 +2,6 @@ package me.brucefreedy.freedylang.lang.variable;
 
 import lombok.Getter;
 import me.brucefreedy.common.List;
-import me.brucefreedy.freedylang.lang.ParseUnit;
-import me.brucefreedy.freedylang.lang.Process;
-import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.abst.Method;
 import me.brucefreedy.freedylang.lang.abst.Null;
 import me.brucefreedy.freedylang.lang.abst.Text;
@@ -12,13 +9,10 @@ import me.brucefreedy.freedylang.lang.scope.Scope;
 import me.brucefreedy.freedylang.lang.scope.ScopeSupplier;
 import me.brucefreedy.freedylang.lang.variable.bool.Bool;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
-import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
-import me.brucefreedy.freedylang.lang.variable.text.SimpleText;
+import me.brucefreedy.freedylang.lang.variable.number.AbstractNumber;
 
-import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class AbstractVar<T> extends Null implements ScopeSupplier {
@@ -86,7 +80,7 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
     }
 
     protected Method number(Consumer<java.lang.Number> setter, Supplier<java.lang.Number> getter) {
-        return method(o -> o instanceof Number, java.lang.Number.class, setter, () -> new SimpleNumber(getter.get()));
+        return method(o -> o instanceof Number, java.lang.Number.class, setter, () -> new AbstractNumber(getter.get()));
     }
 
     protected <TYPE, RETURN> Method method(Consumer<RETURN> setter, Supplier<RETURN> getter,

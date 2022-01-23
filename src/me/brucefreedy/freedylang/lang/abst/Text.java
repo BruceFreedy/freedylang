@@ -4,11 +4,12 @@ import me.brucefreedy.freedylang.lang.ParseUnit;
 import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.variable.AbstractVar;
+import me.brucefreedy.freedylang.lang.variable.SimpleVar;
 
 /**
  * just like placeHolder aka. replaceToken
  */
-public abstract class Text extends AbstractVar<String> implements Process<String>, Stacker<String> {
+public abstract class Text extends AbstractVar<String> implements Process<Text>, Stacker<Text> {
 
     Process<?> process;
 
@@ -36,8 +37,8 @@ public abstract class Text extends AbstractVar<String> implements Process<String
     }
 
     @Override
-    public String get() {
-        return object;
+    public Text get() {
+        return this;
     }
 
     @Override

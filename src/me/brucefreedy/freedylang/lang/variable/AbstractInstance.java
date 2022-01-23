@@ -8,12 +8,12 @@ import me.brucefreedy.freedylang.lang.abst.Empty;
 import me.brucefreedy.freedylang.lang.body.AbstractFront;
 
 @Processable(alias = "new")
-public class SimpleInstance extends AbstractVar<AbstractFront>
-        implements Process<SimpleInstance>, Empty<SimpleInstance> {
+public class AbstractInstance extends AbstractVar<AbstractFront>
+        implements Process<AbstractInstance>, Empty<AbstractInstance> {
 
     Process<?> process;
 
-    public SimpleInstance() {
+    public AbstractInstance() {
         super(null);
     }
 
@@ -37,7 +37,7 @@ public class SimpleInstance extends AbstractVar<AbstractFront>
     }
 
     @Override
-    public SimpleInstance get() {
+    public AbstractInstance get() {
         return this;
     }
 

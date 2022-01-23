@@ -3,13 +3,11 @@ package me.brucefreedy.freedylang.lang.variable.number;
 import me.brucefreedy.freedylang.lang.ParseUnit;
 import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.ProcessUnit;
-import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
 import me.brucefreedy.freedylang.lang.abst.Stacker;
 import me.brucefreedy.freedylang.lang.control.conditional.Comparable;
-import me.brucefreedy.freedylang.lang.variable.AbstractVar;
-import me.brucefreedy.freedylang.lang.variable.Member;
+import me.brucefreedy.freedylang.lang.variable.SimpleVar;
 
-public abstract class Number extends AbstractVar<java.lang.Number> implements Process<Object>, Comparable, Stacker<Object> {
+public abstract class Number extends SimpleVar<java.lang.Number> implements Process<Object>, Comparable, Stacker<Object> {
 
     protected Process<?> process;
 
@@ -85,6 +83,6 @@ public abstract class Number extends AbstractVar<java.lang.Number> implements Pr
 
     @Override
     public Object get() {
-        return new SimpleNumber(object);
+        return new AbstractNumber(object);
     }
 }

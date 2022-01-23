@@ -3,7 +3,7 @@ package me.brucefreedy.freedylang.lang;
 import me.brucefreedy.freedylang.lang.abst.Vanisher;
 import me.brucefreedy.freedylang.lang.regex.Regex;
 import me.brucefreedy.freedylang.lang.variable.VariableImpl;
-import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
+import me.brucefreedy.freedylang.lang.variable.number.AbstractNumber;
 
 import java.util.function.Supplier;
 
@@ -36,7 +36,7 @@ public interface Process<R> extends Supplier<R> {
             number = Double.parseDouble(processName);
         } catch(NumberFormatException ignored) {}
         if (number != null) {
-            process = new SimpleNumber(number);
+            process = new AbstractNumber(number);
             parseUnit.setSource(source.substring(rex.index));
         } else if (processSupplier == null && !processName.isEmpty()) {
           process = new VariableImpl(processName);

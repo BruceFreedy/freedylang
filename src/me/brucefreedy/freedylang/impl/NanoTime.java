@@ -3,7 +3,7 @@ package me.brucefreedy.freedylang.impl;
 import me.brucefreedy.freedylang.lang.Processable;
 import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
-import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
+import me.brucefreedy.freedylang.lang.variable.number.AbstractNumber;
 
 @Processable(alias = "nanotime")
 public class NanoTime extends ProcessImpl<Number> {
@@ -16,7 +16,7 @@ public class NanoTime extends ProcessImpl<Number> {
         return getTime().toString();
     }
 
-    protected SimpleNumber getTime() {
-        return new SimpleNumber(System.nanoTime());
+    protected AbstractNumber getTime() {
+        return new AbstractNumber(System.nanoTime());
     }
 }

@@ -1,23 +1,13 @@
 package me.brucefreedy.freedylang.lang.abst;
 
-import lombok.Setter;
 import me.brucefreedy.common.List;
-import me.brucefreedy.freedylang.lang.Cover;
 import me.brucefreedy.freedylang.lang.Process;
-import me.brucefreedy.freedylang.lang.variable.AbstractVar;
-import me.brucefreedy.freedylang.lang.variable.bool.Bool;
-import me.brucefreedy.freedylang.lang.variable.number.Number;
-import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
-
-import java.util.function.Consumer;
 
 /**
  * process that contains list of processes
  */
-public class ListProcess extends AbstractVar<List<Process<?>>> {
+public class ListProcess extends VList<Process<?>> {
 
-    @Setter
-    protected Consumer<List<Process<?>>> sync = p -> {};
 
     public ListProcess() {
         this(new List<>());
@@ -25,50 +15,10 @@ public class ListProcess extends AbstractVar<List<Process<?>>> {
 
     public ListProcess(List<Process<?>> list) {
         super(list);
-        register("add", (Method) (processUnit, params) -> {
-            for (Object o : params) {
-                if (o instanceof Process<?>) object.add(((Process<?>) o));
-                else object.add(new Cover(o));
-                sync.accept(object);
-            }
-            return object;
-        });
-        register("remove", (Method) (processUnit, params) -> {
-            object.removeAll(params);
-            sync.accept(object);
-            return new Null();
-        });
-        register("size", (Method) (unit, params) -> new SimpleNumber(object.size()));
-        register("get", (Method) (unit, params) -> {
-            Object first = params.first();
-            if (first instanceof Number) {
-                int index = ((Number) first).getNumber().intValue();
-                if (object.size() <= index) return new Null();
-                return object.get(index);
-            } else return new Null();
-        });
-        register("each", (MethodRunAfter) (unit, params) -> {
-            for (Process<?> process : object) {
-                process.run(unit);
-                unit.getVariableRegister().setVariable("e", process.get());
-                for (Object o : params) {
-                    if (o instanceof Process<?>) ((Process<?>) o).run(unit);
-                }
-            }
-            return new SimpleNumber(object.size());
-        });
-        register("contains", (Method) (unit, params) -> Bool.get(object.contains(params.first())));
     }
 
     public List<Process<?>> getProcesses() {
         return object;
-    }
-
-    @Override
-    public String toString() {
-        if (object.isEmpty()) return super.toString();
-        else if (object.size() == 1) return object.get(0).toString();
-        else return object.toString();
     }
 
 }

@@ -72,7 +72,7 @@ public enum     ProcessDef {
     SINGLE_COMMENT(SingleComment::new),
     MULTI_COMMENT(MultiComment::new),
     WHILE(WhileImpl::new),
-    NEW(SimpleInstance::new),
+    NEW(AbstractInstance::new),
     INCREMENT(IncrementImpl::new),
     DECREMENT(DecrementImpl::new),
     FOR(ForImpl::new),
