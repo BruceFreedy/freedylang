@@ -125,4 +125,14 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
         };
     }
 
+    protected Method func(Function<List<?>, Object> function) {
+        return (unit, params) -> {
+            try {
+                return function.apply(params);
+            } catch (Exception ignored) {
+            }
+            return new Null();
+        };
+    }
+
 }
