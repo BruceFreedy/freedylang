@@ -20,18 +20,18 @@ public abstract class Text extends AbstractVar<String> implements Process<Text>,
 
     Process<?> process;
 
-    public Text() {
-        super("");
+    public Text(String string) {
+        super(string);
         register("length", (Method) (unit, params) -> new SimpleNumber(object.length()));
         register("split", func(params -> new SimpleList(Arrays.stream(object.split(params.toString()))
-                        .map(SimpleText::new).collect(Collectors.toList()))));
+                .map(SimpleText::new).collect(Collectors.toList()))));
         register("sub", (Method) (unit, params) -> {
-          try {
-              int start = ((Number) params.get(0)).getNumber().intValue();
-              int end = ((Number) params.get(1)).getNumber().intValue();
-              return new SimpleText(object.substring(start, end));
-          } catch (Exception ignored) {}
-          return new Null();
+            try {
+                int start = ((Number) params.get(0)).getNumber().intValue();
+                int end = ((Number) params.get(1)).getNumber().intValue();
+                return new SimpleText(object.substring(start, end));
+            } catch (Exception ignored) {}
+            return new Null();
         });
         register("indexOf", func(params -> new SimpleNumber(object.indexOf(params.get(0).toString()))));
         register("charAt", func(params -> new SimpleText(object.charAt(((Number) params.get(0)).getNumber().intValue()) + "")));
@@ -44,8 +44,8 @@ public abstract class Text extends AbstractVar<String> implements Process<Text>,
         register("equals", func(params -> Bool.get(object.equals(params.toString()))));
     }
 
-    public Text(String object) {
-        super(object);
+    public Text() {
+        this("");
     }
 
     @Override
