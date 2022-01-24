@@ -72,8 +72,10 @@ public abstract class AbstractFront extends ListProcess
         for (Process<?> process : getProcesses()) {
             process.run(processUnit);
             if (processUnit.getReturner() != null) {
-                result = processUnit.getReturner().getReturn();
-                processUnit.setReturner(null);
+                if (isMethodScope) {
+                    result = processUnit.getReturner().getReturn();
+                    processUnit.setReturner(null);
+                }
                 break;
             }
         }
