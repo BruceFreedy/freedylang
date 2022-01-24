@@ -23,14 +23,8 @@ public abstract class Text extends AbstractVar<String> implements Process<Text>,
     public Text() {
         super("");
         register("length", (Method) (unit, params) -> new SimpleNumber(object.length()));
-        register("split", (Method) (unit, params) -> {
-            try {
-                return new SimpleList(Arrays.stream(object.split(params.toString()))
-                        .map(SimpleText::new).collect(Collectors.toList()));
-            } catch (Exception ignored) {
-                return new Null();
-            }
-        });
+        register("split", func(params -> new SimpleList(Arrays.stream(object.split(params.toString()))
+                        .map(SimpleText::new).collect(Collectors.toList()))));
         register("sub", (Method) (unit, params) -> {
           try {
               int start = ((Number) params.get(0)).getNumber().intValue();
