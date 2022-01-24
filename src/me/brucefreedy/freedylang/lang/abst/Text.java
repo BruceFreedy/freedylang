@@ -1,6 +1,5 @@
 package me.brucefreedy.freedylang.lang.abst;
 
-import com.sun.tools.javac.util.StringUtils;
 import me.brucefreedy.common.List;
 import me.brucefreedy.freedylang.lang.ParseUnit;
 import me.brucefreedy.freedylang.lang.Process;
@@ -41,12 +40,14 @@ public abstract class Text extends AbstractVar<String> implements Process<Text>,
           return new Null();
         });
         register("indexOf", func(params -> new SimpleNumber(object.indexOf(params.get(0).toString()))));
-        register("chatAt", func(params -> new SimpleText(object.charAt(((Number) params.get(0)).getNumber().intValue()) + "")));
+        register("charAt", func(params -> new SimpleText(object.charAt(((Number) params.get(0)).getNumber().intValue()) + "")));
         register("toLowerCase", func(params -> new SimpleText(object.toLowerCase())));
         register("toUpperCase", func(params -> new SimpleText(object.toUpperCase())));
         register("startWith", func(params -> Bool.get(object.startsWith(params.get(0).toString()))));
         register("endWith", func(params -> Bool.get(object.endsWith(params.get(0).toString()))));
-        register("replace", func(params -> new SimpleText(object.replace(params.get(0).toString(), params.get(1).toString()))));
+        register("replace", func(params -> new SimpleText(object.replaceAll(params.get(0).toString(), params.get(1).toString()))));
+        register("equalsIgnoreCase", func(params -> Bool.get(object.equalsIgnoreCase(params.toString()))));
+        register("equals", func(params -> Bool.get(object.equals(params.toString()))));
     }
 
     public Text(String object) {
