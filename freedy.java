@@ -1,3 +1,2 @@
-A() { return 'a' }
-
-log A
+var = "abcd"
+log var.startWith("f")
