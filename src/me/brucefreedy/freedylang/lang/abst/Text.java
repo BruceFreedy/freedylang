@@ -25,8 +25,8 @@ public abstract class Text extends AbstractVar<String> implements Process<Text>,
         register("length", (Method) (unit, params) -> new SimpleNumber(object.length()));
         register("split", (Method) (unit, params) -> {
             try {
-                return new ListProcess(new List<>(Arrays.stream(
-                        object.split(params.first().toString())).map(SimpleText::new).collect(Collectors.toList())));
+                return new SimpleList(Arrays.stream(object.split(params.toString()))
+                        .map(SimpleText::new).collect(Collectors.toList()));
             } catch (Exception ignored) {
                 return new Null();
             }
