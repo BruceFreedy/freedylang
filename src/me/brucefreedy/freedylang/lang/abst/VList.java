@@ -35,7 +35,7 @@ public abstract class VList<T> extends SimpleVar<List<T>> {
             Object first = params.first();
             if (first instanceof Number) {
                 int index = ((Number) first).getNumber().intValue();
-                if (object.size() <= index) return new Null();
+                if (object.size() <= index || index < 0) return new Null();
                 return object.get(index);
             } else return new Null();
         });
