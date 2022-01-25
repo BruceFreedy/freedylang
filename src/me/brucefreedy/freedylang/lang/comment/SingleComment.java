@@ -8,4 +8,9 @@ public class SingleComment extends AbstractComment {
     public String getEndSeq() {
         return "\n";
     }
+
+    @Override
+    public int getEndSeqLength() {
+        return 0;
+    }
 }
