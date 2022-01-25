@@ -10,6 +10,7 @@ import me.brucefreedy.freedylang.lang.scope.ScopeSupplier;
 import me.brucefreedy.freedylang.lang.variable.bool.Bool;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
 import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
+import me.brucefreedy.freedylang.lang.variable.text.SimpleText;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -48,7 +49,7 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
     }
 
     protected Method stringValue(Consumer<String> setter, Supplier<String> getter) {
-        return method(o -> o instanceof Text, String.class, setter, getter::get);
+        return method(o -> o instanceof Text, String.class, setter, () -> new SimpleText(getter.get()));
     }
 
     protected Method boolValue(Consumer<Boolean> setter, Supplier<Boolean> getter) {
