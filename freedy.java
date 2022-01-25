@@ -1,5 +1,2 @@
-class a {
-    str = "asdf"
-    if (str.startWith("a"))
-    log 'a'
-}
+if (false) {log true }
+else log false

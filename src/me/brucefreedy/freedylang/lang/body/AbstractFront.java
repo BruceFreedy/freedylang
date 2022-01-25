@@ -45,10 +45,7 @@ public abstract class AbstractFront extends ListProcess
         while (!parseUnit.getSource().isEmpty()) {
             Process<?> process = Process.parsing(parseUnit);
             Process<?> peek = null;
-            boolean popped = parseUnit.popPeek(stealer -> {
-                getProcesses().add(stealer);
-                stealer.setProcess(process);
-            });
+            boolean popped = parseUnit.steal(getProcesses()::add, () -> process);
             if (process instanceof Stacker) {
                 peek = ((Stacker<?>) process).getPeek();
                 if (!popped && peek instanceof Empty) getProcesses().add(process);
@@ -101,4 +98,5 @@ public abstract class AbstractFront extends ListProcess
         if (result != null) return result.toString();
         return super.toString();
     }
+
 }

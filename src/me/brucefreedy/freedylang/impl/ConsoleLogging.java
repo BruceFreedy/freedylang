@@ -11,10 +11,7 @@ public class ConsoleLogging extends VoidFunction {
     @Override
     public void parse(ParseUnit parseUnit) {
         super.parse(parseUnit);
-        parseUnit.popPeek(stealer -> {
-            stealer.setProcess(process);
-            process = stealer;
-        });
+        parseUnit.steal(p -> process = p, () -> process);
     }
 
     @Override

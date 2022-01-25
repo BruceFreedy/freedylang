@@ -114,10 +114,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
         } else if (process instanceof Assignment) {  //assignment
             assignment = Process.parsing(parseUnit);
             process = new Breaker();
-            parseUnit.popPeek(stealer -> {
-                stealer.setProcess(assignment);
-                assignment = stealer;
-            });
+            parseUnit.steal(p -> assignment = p, () -> assignment);
         }
     }
 

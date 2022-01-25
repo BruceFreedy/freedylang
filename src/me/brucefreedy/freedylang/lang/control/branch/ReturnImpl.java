@@ -13,17 +13,9 @@ public class ReturnImpl extends ProcessImpl<Object> implements Returner {
     Object resultObj = new Null();
 
     @Override
-    public Process<?> getProcess() {
-        return new Breaker();
-    }
-
-    @Override
     public void parse(ParseUnit parseUnit) {
         super.parse(parseUnit);
-        parseUnit.popPeek(stealer -> {
-            stealer.setProcess(process);
-            process = stealer;
-        });
+        parseUnit.steal(p -> process = p, () -> process);
         result = process;
     }
 

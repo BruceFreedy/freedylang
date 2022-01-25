@@ -7,7 +7,6 @@ public class Scope extends RegistryImpl<String, Object> {
     public enum ScopeType {
         BODY, METHOD, CLASS
     }
-
     public Scope(Scope scope) {
         super(scope);
         this.type = scope.type;

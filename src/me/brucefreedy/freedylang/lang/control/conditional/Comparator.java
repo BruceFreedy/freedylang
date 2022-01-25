@@ -49,12 +49,9 @@ public abstract class Comparator extends StealerImpl<Bool> implements Comparison
             Process<?> peek = ((Stacker<?>) process).getPeek();
             if (peek instanceof Or) {
                 Process<?> comparator = Process.parsing(parseUnit);
-                parseUnit.popPeek(stealer -> {
-                    stealer.setProcess(comparator);
-                    if (stealer instanceof Condition) {
-                        this.condition = (Condition) stealer;
-                    }
-                });
+                parseUnit.steal(p -> {
+                    if (p instanceof Condition) condition = ((Condition) p);
+                }, () -> comparator);
             }
         }
         addStealer(parseUnit);
