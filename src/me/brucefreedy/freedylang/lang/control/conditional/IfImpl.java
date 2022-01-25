@@ -27,12 +27,6 @@ public class IfImpl extends ProcessImpl<Bool> {
             if (runBody instanceof Breaker) {
                 runBody = Process.parsing(parseUnit);
             }
-            process = Process.parsing(parseUnit);
-            if (process instanceof Else) {
-                anElse = ((Else) process);
-                anElse.anIf = this;
-                parseUnit.popPeek();
-            }
         }
     }
 
