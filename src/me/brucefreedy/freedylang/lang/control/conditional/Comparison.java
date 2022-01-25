@@ -46,7 +46,7 @@ public interface Comparison {
             super.run(processUnit);
             Object o = process.get();
             if (o instanceof Bool) {
-                result = ((Bool) o);
+                result = Bool.get(!((Bool) o).getValue());
             }
         }
 
@@ -54,6 +54,11 @@ public interface Comparison {
         public Bool get() {
             if (result == null) return Bool.get(false);
             return result;
+        }
+
+        @Override
+        public String toString() {
+            return get().toString();
         }
     }
 
