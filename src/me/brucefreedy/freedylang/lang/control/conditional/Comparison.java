@@ -84,7 +84,7 @@ public interface Comparison {
         }
     }
 
-    @Processable(alias = {"=!", "!="}, regex = true)
+    @Processable(alias = "!=", regex = true)
     class NotEquals extends Comparator {
         @Override
         public boolean compare(Object a, Object b) {
