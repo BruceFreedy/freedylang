@@ -1,5 +1,6 @@
 package me.brucefreedy.freedylang.lang.control.conditional;
 
+import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.Processable;
 import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
 import me.brucefreedy.freedylang.lang.variable.bool.Bool;
@@ -39,11 +40,20 @@ public interface Comparison {
 
     @Processable(alias = "!", regex = true)
     class ReverseBool extends ProcessImpl<Bool> {
+        Bool result;
+        @Override
+        public void run(ProcessUnit processUnit) {
+            super.run(processUnit);
+            Object o = process.get();
+            if (o instanceof Bool) {
+                result = ((Bool) o);
+            }
+        }
+
         @Override
         public Bool get() {
-            Object o = process.get();
-            if (o instanceof Bool) return Bool.get(!((Bool) o).getValue());
-            else return Bool.get(false);
+            if (result == null) return Bool.get(false);
+            return result;
         }
     }
 
