@@ -1,9 +1,7 @@
 package me.brucefreedy.freedylang.lang.control.branch;
 
-import me.brucefreedy.freedylang.lang.ParseUnit;
+import me.brucefreedy.freedylang.lang.*;
 import me.brucefreedy.freedylang.lang.Process;
-import me.brucefreedy.freedylang.lang.ProcessUnit;
-import me.brucefreedy.freedylang.lang.Processable;
 import me.brucefreedy.freedylang.lang.abst.Null;
 import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
 import me.brucefreedy.freedylang.lang.abst.Returner;
@@ -13,6 +11,11 @@ public class ReturnImpl extends ProcessImpl<Object> implements Returner {
 
     Process<?> result;
     Object resultObj = new Null();
+
+    @Override
+    public Process<?> getProcess() {
+        return new Breaker();
+    }
 
     @Override
     public void parse(ParseUnit parseUnit) {
