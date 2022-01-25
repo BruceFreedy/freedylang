@@ -28,8 +28,7 @@ public class VariableRegister extends List<Scope> {
 
     public Object getVariable(ProcessUnit processUnit, List<String> nameList) {
         byte overMethod = 0;
-        if (nameList.size() == 1) return getVariable(nameList.get(0));
-        else for (Scope scope : new List<>(this)) {
+        for (Scope scope : new List<>(this)) {
             if (overMethod == 2) return null;
             if (overMethod == 1) overMethod = 2;
             if (overMethod == 0 && scope.getType() == Scope.ScopeType.METHOD) overMethod = 1;
@@ -41,8 +40,7 @@ public class VariableRegister extends List<Scope> {
 
     public void setVariable(ProcessUnit processUnit, List<String> nameList, Object process) {
         byte overMethod = 0;
-        if (nameList.size() == 1) setVariable(nameList.get(0), process);
-        else for (Scope scope : new List<>(this)) {
+        for (Scope scope : new List<>(this)) {
             if (overMethod == 2) return;
             if (overMethod == 1) overMethod = 2;
             if (overMethod == 0 && scope.getType() == Scope.ScopeType.METHOD) overMethod = 1;
