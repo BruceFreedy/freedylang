@@ -40,7 +40,7 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
     public boolean equals(Object o) {
         if (super.equals(o)) return true;
         if (o instanceof AbstractVar) return getObject().equals(((AbstractVar<?>) o).getObject());
-        else return super.equals(o);
+        else return false;
     }
 
     public Scope register(String name, Object var) {

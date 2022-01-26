@@ -44,7 +44,7 @@ public abstract class VList<T> extends SimpleVar<List<T>> {
             }
             return new SimpleNumber(object.size());
         });
-        register("contains", (Method) (unit, params) -> Bool.get(object.contains(params.first())));
+        register("contains", (Method) (unit, params) -> Bool.get(object.containsAll(params)));
     }
 
     @Override
