@@ -22,8 +22,7 @@ public class TestCode extends ProcessImpl<Object> {
         super.run(processUnit);
 //        System.out.println(processUnit.getVariableRegister());
 
-        System.out.println(result =
-                (process instanceof VariableImpl ?
+        result = ((process instanceof VariableImpl ?
                         process.get().getClass().getSimpleName()
                         : process.getClass().getSimpleName())
                         + "=" + process.get());
