@@ -156,7 +156,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                 if (scope.first() != null) register.add(scope.first());
                 if (assignment instanceof AbstractFront) {
                     result = ((Method) variable).run(new ProcessUnit(register), ((AbstractFront) assignment).getProcesses());
-                }  else if (assignment instanceof Method) {
+                } else if (assignment instanceof Method) {
                     result = ((Method) variable).run(new ProcessUnit(register), new List<>(Collections.singletonList(assignment.get())));
                 } else result = ((Method) variable).run(new ProcessUnit(register), new List<>(Collections.singletonList(assignment)));
             } else if (assignment instanceof Method) {
@@ -197,7 +197,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
 
     @Override
     public Object run(ProcessUnit processUnit, List<?> params) {
-        if (body == null || this.params == null && assignment == null) return this;
+        if (body != null || this.params == null && assignment == null) return this;
         VariableRegister scope = processUnit.getVariableRegister();
         if (args.size() <= params.size()) {
             body.setBeforeRun(
