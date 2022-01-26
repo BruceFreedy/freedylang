@@ -144,7 +144,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                 if (nextFunc != null && result instanceof ScopeSupplier) {
                     nextFunc.beforeScope = ((ScopeSupplier) result);
                     nextFunc.run(processUnit);
-                    this.result = nextFunc.get();
+                    this.result = nextFunc.result;
                     return;
                 } else this.result = result;
             }
