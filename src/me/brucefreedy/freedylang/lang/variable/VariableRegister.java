@@ -35,10 +35,10 @@ public class VariableRegister extends List<Scope> {
     }
 
     public void setVariable(ProcessUnit processUnit, List<String> nameList, Object process) {
-        if (nameList.size() == 1) setVariable(nameList.get(0), process);
-        else for (Scope scope : new List<>(this)) {
+        for (Scope scope : new List<>(this)) {
             if (setVariable(processUnit, scope, nameList, process)) return;
         }
+        if (nameList.size() == 1) setVariable(nameList.get(0), process);
     }
 
     public Object getVariable(Scope scope, String name) {
