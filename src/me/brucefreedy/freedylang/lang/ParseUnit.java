@@ -1,8 +1,6 @@
 package me.brucefreedy.freedylang.lang;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import me.brucefreedy.common.List;
 import me.brucefreedy.freedylang.lang.abst.Stealer;
 import me.brucefreedy.freedylang.lang.abst.Taker;
@@ -15,15 +13,21 @@ import java.util.function.Supplier;
 /**
  * just kinda unit that help to parse
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ParseUnit extends List<Stealer<?>> {
-    
+
     @Getter
     final List<List<Process<?>>> declaration = new List<>();
 
     @Getter
+    @Setter
+    Process<?> next;
+
+    @NonNull
+    @Getter
     ProcessRegister processRegister;
 
+    @NonNull
     @Getter
     @Setter
     private String source;

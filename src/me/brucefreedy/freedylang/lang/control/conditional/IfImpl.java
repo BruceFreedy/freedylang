@@ -3,6 +3,7 @@ package me.brucefreedy.freedylang.lang.control.conditional;
 import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.*;
 import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
+import me.brucefreedy.freedylang.lang.abst.Stacker;
 import me.brucefreedy.freedylang.lang.body.AbstractFront;
 import me.brucefreedy.freedylang.lang.variable.bool.Bool;
 import me.brucefreedy.freedylang.lang.variable.bool.False;
@@ -16,7 +17,6 @@ public class IfImpl extends ProcessImpl<Bool> {
     Bool result;
     AbstractFront body;  //condition body
     Process<?> runBody;  //'true' body
-    Else anElse;
 
     @Override
     public void parse(ParseUnit parseUnit) {
@@ -27,19 +27,33 @@ public class IfImpl extends ProcessImpl<Bool> {
             if (runBody instanceof Breaker) {
                 runBody = Process.parsing(parseUnit);
             }
+            if (runBody instanceof Stacker) {
+                process = ((Stacker<?>) runBody).getProcess();
+                if (process instanceof Breaker) {
+                    process = Process.parsing(parseUnit);
+                    parseUnit.setNext(process);
+                }
+            }
+            else {
+                process = Process.parsing(parseUnit);
+                parseUnit.setNext(process);
+            }
+            if (process instanceof Else) {
+                ((Else) process).anIf = this;
+            }
+            process = new Breaker();
         }
     }
 
     @Override
     public void run(ProcessUnit processUnit) {
-        body.getProcesses().forEach(p -> p.run(processUnit));
+        body.run(processUnit);
         run(body.getProcesses().stream().map(Supplier::get).allMatch(o -> o instanceof True), processUnit);
     }
 
     public void run(boolean result, ProcessUnit processUnit) {
         this.result = Bool.get(result);
         if (result && runBody != null) runBody.run(processUnit);
-        if (anElse != null) anElse.run(processUnit);
     }
 
     @Override

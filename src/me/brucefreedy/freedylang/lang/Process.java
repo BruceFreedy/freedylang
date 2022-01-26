@@ -21,6 +21,11 @@ public interface Process<R> extends Supplier<R> {
      * parse and return parse-finished process instance
      */
     static Process<?> parsing(ParseUnit parseUnit) {
+        if (parseUnit.getNext() != null) {
+            Process<?> next = parseUnit.getNext();
+            parseUnit.setNext(null);
+            return next;
+        }
         String source = parseUnit.getSource();
         if (source.isEmpty()) return new Breaker();
         Regex.RexResult rex = Regex.rex(source);

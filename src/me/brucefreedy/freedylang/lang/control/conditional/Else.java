@@ -2,15 +2,13 @@ package me.brucefreedy.freedylang.lang.control.conditional;
 
 import me.brucefreedy.freedylang.lang.Breaker;
 import me.brucefreedy.freedylang.lang.ParseUnit;
-import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.Processable;
 import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
 import me.brucefreedy.freedylang.lang.abst.Stacker;
-import me.brucefreedy.freedylang.lang.abst.Taker;
 
 @Processable(alias = "else")
-public class Else extends ProcessImpl<Else> implements Taker<Else> {
+public class Else extends ProcessImpl<Else> {
 
     boolean available;
     IfImpl anIf;
@@ -19,7 +17,6 @@ public class Else extends ProcessImpl<Else> implements Taker<Else> {
     public void parse(ParseUnit parseUnit) {
         super.parse(parseUnit);
         if (process instanceof Breaker) super.parse(parseUnit);
-        parseUnit.add(this);
     }
 
     @Override
@@ -36,14 +33,6 @@ public class Else extends ProcessImpl<Else> implements Taker<Else> {
     @Override
     public Else get() {
         return this;
-    }
-
-    @Override
-    public void setProcess(Process<?> process) {
-        if (process instanceof IfImpl) {
-            anIf = ((IfImpl) process);
-            anIf.anElse = this;
-        }
     }
 
 }

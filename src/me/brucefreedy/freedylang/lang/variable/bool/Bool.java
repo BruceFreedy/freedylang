@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 public abstract class Bool extends SimpleVar<Boolean> implements Predicate<Object> {
 
     public Bool() {
-        super(null);
+        super(false);
     }
 
     @Override
