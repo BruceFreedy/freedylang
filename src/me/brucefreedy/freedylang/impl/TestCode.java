@@ -20,7 +20,7 @@ public class TestCode extends ProcessImpl<Object> {
     @Override
     public void run(ProcessUnit processUnit) {
         super.run(processUnit);
-//        System.out.println(processUnit.getVariableRegister());
+        System.out.println(processUnit.getVariableRegister());
 
         result = ((process instanceof VariableImpl ?
                         process.get().getClass().getSimpleName()
