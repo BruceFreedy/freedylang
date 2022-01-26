@@ -10,7 +10,7 @@ import me.brucefreedy.freedylang.lang.variable.text.SimpleText;
 @Processable(alias = "testcode")
 public class TestCode extends ProcessImpl<Object> {
 
-    String result = "";
+    String result = "not tested";
 
     @Override
     public void parse(ParseUnit parseUnit) {
