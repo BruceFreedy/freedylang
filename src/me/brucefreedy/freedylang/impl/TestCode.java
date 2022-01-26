@@ -21,7 +21,7 @@ public class TestCode extends ProcessImpl<TestCode> {
 
         System.out.println(
                 (process instanceof VariableImpl ?
-                        ((VariableImpl) process).getNodes()
+                        process.get().getClass().getSimpleName()
                         : process.getClass().getSimpleName())
                         + "=" + process.get());
     }
