@@ -24,6 +24,7 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
     public AbstractVar(T object) {
         this.object = object;
         register("this", func(o -> this));
+        register("equals", func(o -> Bool.get(equals(o))));
     }
 
     @Override
