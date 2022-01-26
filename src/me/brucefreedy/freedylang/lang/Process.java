@@ -65,4 +65,5 @@ public interface Process<R> extends Supplier<R> {
         if (process instanceof Skipper) return parsing(parseUnit);
         return process;
     }
+
 }
