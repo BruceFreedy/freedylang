@@ -46,7 +46,6 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
     }
 
     public Scope register(String name, Object var) {
-        Scope scope = getScope();
         scope.register(name, var);
         return scope;
     }

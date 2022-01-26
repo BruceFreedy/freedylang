@@ -17,6 +17,7 @@ public abstract class AbstractFront extends ListProcess
     protected Supplier<Scope> scopeSupplier = Scope::new;
     protected Runnable beforeRun = () -> {};
     protected Object result;
+    protected Scope scope;
 
     @Override
     public Object getReturn() {
@@ -61,8 +62,13 @@ public abstract class AbstractFront extends ListProcess
     }
 
     @Override
+    public Scope getScope() {
+        return scope;
+    }
+
+    @Override
     public void run(ProcessUnit processUnit) {
-        Scope scope = getScopeSupplier().get();
+        scope = getScopeSupplier().get();
         boolean isMethodScope = scope.getType() == Scope.ScopeType.METHOD;
         processUnit.getVariableRegister().add(scope);
         beforeRun.run();
