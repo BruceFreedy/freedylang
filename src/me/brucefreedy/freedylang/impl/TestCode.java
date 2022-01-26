@@ -23,7 +23,7 @@ public class TestCode extends ProcessImpl<TestCode> {
                 (process instanceof VariableImpl ?
                         process.get().getClass().getSimpleName()
                         : process.getClass().getSimpleName())
-                        + "=" + process);
+                        + "=" + process.get());
     }
 
     @Override

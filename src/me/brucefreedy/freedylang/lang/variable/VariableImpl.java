@@ -197,7 +197,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
 
     @Override
     public Object run(ProcessUnit processUnit, List<?> params) {
-        if (this.params == null && assignment == null) return this;
+        if (this.body != null && this.params == null && assignment == null) return this;
         VariableRegister scope = processUnit.getVariableRegister();
         if (args.size() <= params.size()) {
             body.setBeforeRun(
