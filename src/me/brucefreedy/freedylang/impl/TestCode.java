@@ -32,4 +32,9 @@ public class TestCode extends ProcessImpl<Object> {
     public SimpleText get() {
         return new SimpleText(result);
     }
+
+    @Override
+    public String toString() {
+        return result;
+    }
 }
