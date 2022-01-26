@@ -4,6 +4,7 @@ import me.brucefreedy.freedylang.lang.ParseUnit;
 import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.Processable;
 import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
+import me.brucefreedy.freedylang.lang.variable.VariableImpl;
 
 @Processable(alias = "testcode")
 public class TestCode extends ProcessImpl<TestCode> {
@@ -17,7 +18,12 @@ public class TestCode extends ProcessImpl<TestCode> {
     public void run(ProcessUnit processUnit) {
         super.run(processUnit);
 //        System.out.println(processUnit.getVariableRegister());
-        System.out.println(process.getClass().getSimpleName() + "=" + process);
+
+        System.out.println(
+                (process instanceof VariableImpl ?
+                        process.get().getClass().getSimpleName()
+                        : process.getClass().getSimpleName())
+                        + "=" + process);
     }
 
     @Override
