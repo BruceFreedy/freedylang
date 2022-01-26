@@ -1,2 +1,3 @@
+sum = 100
 var = ["1", '2', '3']
-var.each=log this.startWith=1
+var.each=log this + sum

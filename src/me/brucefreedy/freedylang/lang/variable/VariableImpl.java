@@ -138,10 +138,13 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             Object variable = getVariable(processUnit, scope, nodes);
             if (variable instanceof Method) {
                 List<Process<?>> paramsList = params.getProcesses();
-                if (!(variable instanceof MethodRunAfter)) paramsList.forEach(p -> p.run(processUnit));
+                boolean isRunAfter = variable instanceof MethodRunAfter;
+                if (!isRunAfter) paramsList.forEach(p -> p.run(processUnit));
                 VariableRegister register = new VariableRegister();
                 if (scope.first() != null) register.add(scope.first());
-                Object result = ((Method) variable).run(new ProcessUnit(register), new List<>(paramsList.stream().map(Supplier::get).collect(Collectors.toList())));
+                Object result = ((Method) variable).run(new ProcessUnit(register),
+                        isRunAfter ? new List<>(paramsList) :
+                        new List<>(paramsList.stream().map(Supplier::get).collect(Collectors.toList())));
                 if (nextFunc != null && result instanceof ScopeSupplier) {
                     nextFunc.beforeScope = ((ScopeSupplier) result);
                     nextFunc.run(processUnit);
