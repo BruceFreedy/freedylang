@@ -76,7 +76,7 @@ public abstract class Text extends AbstractVar<String> implements Process<Text>,
     @Override
     public boolean equals(Object o) {
         if (super.equals(o)) return true;
-        return toString().equals(o);
+        return toString().equals(o.toString());
     }
 
 }
