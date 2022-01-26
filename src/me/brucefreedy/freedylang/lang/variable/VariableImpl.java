@@ -163,7 +163,6 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                 result = assignment.get();
                 setVariable(processUnit, scope, nodes, result);
             } else if (assignment instanceof AbstractFront) {
-                System.out.println("debug!!!");
                 result = assignment;
                 setVariable(processUnit, scope, nodes, result);
             } else {
@@ -186,7 +185,10 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
 
     @Override
     public Object get() {
-        if (params != null && body != null) return this;
+        if (params != null && body != null) {
+            System.out.println("debug!!");
+            return this;
+        }
         return result;
     }
 
