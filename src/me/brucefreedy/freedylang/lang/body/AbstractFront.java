@@ -62,13 +62,8 @@ public abstract class AbstractFront extends ListProcess
     }
 
     @Override
-    public Scope getScope() {
-        return scope;
-    }
-
-    @Override
     public void run(ProcessUnit processUnit) {
-        scope = getScopeSupplier().get();
+        Scope scope = getScopeSupplier().get();
         boolean isMethodScope = scope.getType() == Scope.ScopeType.METHOD;
         processUnit.getVariableRegister().add(scope);
         beforeRun.run();
