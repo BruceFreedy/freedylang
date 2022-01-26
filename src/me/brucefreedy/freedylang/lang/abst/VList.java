@@ -3,6 +3,8 @@ package me.brucefreedy.freedylang.lang.abst;
 import lombok.Setter;
 import me.brucefreedy.common.List;
 import me.brucefreedy.freedylang.lang.Process;
+import me.brucefreedy.freedylang.lang.scope.Scope;
+import me.brucefreedy.freedylang.lang.variable.AbstractVar;
 import me.brucefreedy.freedylang.lang.variable.SimpleVar;
 import me.brucefreedy.freedylang.lang.variable.bool.Bool;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
@@ -32,17 +34,12 @@ public abstract class VList<T> extends SimpleVar<List<T>> {
             } else return new Null();
         });
         register("each", (MethodRunAfter) (unit, params) -> {
-            for (T process : object) {
-                if (process instanceof Process<?>) {
-                    Process<?> p = (Process<?>) process;
-                    p.run(unit);
-                    Object o = p.get();
-                    unit.getVariableRegister().setVariable("e", o);
-                } else {
-                    unit.getVariableRegister().setVariable("e", process);
-                }
-                for (Object o : params) {
-                    if (o instanceof Process<?>) ((Process<?>) o).run(unit);
+            for (T process : new List<>(object)) {
+                if (process instanceof AbstractVar) {
+                    Scope scope = ((AbstractVar<?>) process).getScope();
+                    unit.getVariableRegister().add(scope);
+                    params.stream().filter(o -> o instanceof Process).forEach(o -> ((Process<?>) o).run(unit));
+                    unit.getVariableRegister().popPeek();
                 }
             }
             return new SimpleNumber(object.size());

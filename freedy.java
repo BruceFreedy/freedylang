@@ -1,2 +1,2 @@
-if (false) { log true }
-else { log false }
+var =["a","b","c"]
+var.each=log upperCase

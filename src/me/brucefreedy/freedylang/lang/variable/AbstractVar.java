@@ -23,6 +23,7 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
 
     public AbstractVar(T object) {
         this.object = object;
+        register("this", func(o -> this));
     }
 
     @Override
@@ -38,7 +39,7 @@ public class AbstractVar<T> extends Null implements ScopeSupplier {
     @Override
     public boolean equals(Object o) {
         if (super.equals(o)) return true;
-        if (o instanceof AbstractVar) return object.equals(((AbstractVar<?>) o).object);
+        if (o instanceof AbstractVar) return getObject().equals(((AbstractVar<?>) o).getObject());
         else return super.equals(o);
     }
 
