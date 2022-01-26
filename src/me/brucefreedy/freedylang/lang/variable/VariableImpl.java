@@ -12,6 +12,7 @@ import me.brucefreedy.freedylang.lang.scope.Scope;
 import me.brucefreedy.freedylang.lang.scope.ScopeSupplier;
 
 import java.util.Collections;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -140,7 +141,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                 if (!(variable instanceof MethodRunAfter)) paramsList.forEach(p -> p.run(processUnit));
                 VariableRegister register = new VariableRegister();
                 if (scope.first() != null) register.add(scope.first());
-                Object result = ((Method) variable).run(new ProcessUnit(register), paramsList);
+                Object result = ((Method) variable).run(new ProcessUnit(register), new List<>(paramsList.stream().map(Supplier::get).collect(Collectors.toList())));
                 if (nextFunc != null && result instanceof ScopeSupplier) {
                     nextFunc.beforeScope = ((ScopeSupplier) result);
                     nextFunc.run(processUnit);
