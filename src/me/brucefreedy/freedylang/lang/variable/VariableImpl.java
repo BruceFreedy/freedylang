@@ -144,7 +144,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                 if (nextFunc != null && result instanceof ScopeSupplier) {
                     nextFunc.beforeScope = ((ScopeSupplier) result);
                     nextFunc.run(processUnit);
-                    this.result = nextFunc.result;
+                    this.result = nextFunc.get();
                     return;
                 } else this.result = result;
             }
@@ -198,7 +198,6 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
     @Override
     public Object run(ProcessUnit processUnit, List<?> params) {
         if (this.body != null && this.params == null && assignment == null) {
-            System.out.println(nodes);
             return this;
         }
         VariableRegister scope = processUnit.getVariableRegister();
