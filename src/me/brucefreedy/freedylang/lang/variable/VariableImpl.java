@@ -151,23 +151,25 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             }
         } else if (assignment != null) {  //assignment
             Object variable = getVariable(processUnit, scope, nodes);
-            if (!(variable instanceof MethodRunAfter)) assignment.run(processUnit);
+            boolean isRunAfter = variable instanceof MethodRunAfter;
+            if (!isRunAfter) assignment.run(processUnit);
             if (variable instanceof Method && !(variable instanceof VariableImpl)) {
                 VariableRegister register = new VariableRegister();
                 if (scope.first() != null) register.add(scope.first());
                 if (assignment instanceof AbstractFront) {
                     result = ((Method) variable).run(new ProcessUnit(register), ((AbstractFront) assignment).getProcesses());
                 } else if (assignment instanceof Method) {
-                    result = ((Method) variable).run(new ProcessUnit(register), new List<>(Collections.singletonList(assignment.get())));
+                    result = ((Method) variable).run(new ProcessUnit(register),
+                            new List<>(Collections.singletonList(isRunAfter ? assignment : assignment.get())));
                 } else result = ((Method) variable).run(new ProcessUnit(register), new List<>(Collections.singletonList(assignment)));
             } else if (assignment instanceof Method) {
-                result = assignment.get();
+                result = isRunAfter ? assignment : assignment.get();
                 setVariable(processUnit, scope, nodes, result);
             } else if (assignment instanceof AbstractFront) {
                 result = assignment;
                 setVariable(processUnit, scope, nodes, result);
             } else {
-                result = assignment.get();
+                result = isRunAfter ? assignment : assignment.get();
                 setVariable(processUnit, scope, nodes, result);
             }
         } else {  //variable
