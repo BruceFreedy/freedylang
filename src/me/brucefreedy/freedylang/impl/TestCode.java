@@ -5,9 +5,12 @@ import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.Processable;
 import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
 import me.brucefreedy.freedylang.lang.variable.VariableImpl;
+import me.brucefreedy.freedylang.lang.variable.text.SimpleText;
 
 @Processable(alias = "testcode")
-public class TestCode extends ProcessImpl<TestCode> {
+public class TestCode extends ProcessImpl<Object> {
+
+    String result = "";
 
     @Override
     public void parse(ParseUnit parseUnit) {
@@ -19,7 +22,7 @@ public class TestCode extends ProcessImpl<TestCode> {
         super.run(processUnit);
 //        System.out.println(processUnit.getVariableRegister());
 
-        System.out.println(
+        System.out.println(result =
                 (process instanceof VariableImpl ?
                         process.get().getClass().getSimpleName()
                         : process.getClass().getSimpleName())
@@ -27,7 +30,7 @@ public class TestCode extends ProcessImpl<TestCode> {
     }
 
     @Override
-    public TestCode get() {
-        return this;
+    public SimpleText get() {
+        return new SimpleText(result);
     }
 }
