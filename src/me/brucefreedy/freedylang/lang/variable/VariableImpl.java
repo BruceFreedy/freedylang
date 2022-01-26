@@ -138,7 +138,9 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             if (variable instanceof Method) {
                 List<Process<?>> paramsList = params.getProcesses();
                 if (!(variable instanceof MethodRunAfter)) paramsList.forEach(p -> p.run(processUnit));
-                Object result = ((Method) variable).run(processUnit, paramsList);
+                VariableRegister register = new VariableRegister();
+                if (scope.first() != null) register.add(scope.first());
+                Object result = ((Method) variable).run(new ProcessUnit(register), paramsList);
                 if (nextFunc != null && result instanceof ScopeSupplier) {
                     nextFunc.beforeScope = ((ScopeSupplier) result);
                     nextFunc.run(processUnit);
@@ -150,11 +152,13 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             Object variable = getVariable(processUnit, scope, nodes);
             if (!(variable instanceof MethodRunAfter)) assignment.run(processUnit);
             if (variable instanceof Method && !(variable instanceof VariableImpl)) {
+                VariableRegister register = new VariableRegister();
+                if (scope.first() != null) register.add(scope.first());
                 if (assignment instanceof AbstractFront) {
-                    result = ((Method) variable).run(processUnit, ((AbstractFront) assignment).getProcesses());
+                    result = ((Method) variable).run(new ProcessUnit(register), ((AbstractFront) assignment).getProcesses());
                 }  else if (assignment instanceof Method) {
-                    result = ((Method) variable).run(processUnit, new List<>(Collections.singletonList(assignment.get())));
-                } else result = ((Method) variable).run(processUnit, new List<>(Collections.singletonList(assignment)));
+                    result = ((Method) variable).run(new ProcessUnit(register), new List<>(Collections.singletonList(assignment.get())));
+                } else result = ((Method) variable).run(new ProcessUnit(register), new List<>(Collections.singletonList(assignment)));
             } else if (assignment instanceof Method) {
                 result = assignment.get();
                 setVariable(processUnit, scope, nodes, result);
@@ -170,7 +174,9 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             if (variable == null) result = new Null();
             else {
                 if (variable instanceof Method) {
-                    result = ((Method) variable).run(processUnit, new List<>());
+                    VariableRegister register = new VariableRegister();
+                    if (scope.first() != null) register.add(scope.first());
+                    result = ((Method) variable).run(new ProcessUnit(register), new List<>());
                 } else result = variable;
             }
         }
