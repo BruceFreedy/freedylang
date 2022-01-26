@@ -16,8 +16,8 @@ public class TestCode extends ProcessImpl<TestCode> {
     @Override
     public void run(ProcessUnit processUnit) {
         super.run(processUnit);
-//        System.out.println(processUnit.getVariableRegister());
-        System.out.println(process.getClass().getSimpleName() + "=" + process);
+        System.out.println(processUnit.getVariableRegister());
+//        System.out.println(process.getClass().getSimpleName() + "=" + process);
     }
 
     @Override

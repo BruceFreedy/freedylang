@@ -27,12 +27,8 @@ public class VariableRegister extends List<Scope> {
     }
 
     public Object getVariable(ProcessUnit processUnit, List<String> nameList) {
-        byte overMethod = 0;
         if (nameList.size() == 1) return getVariable(nameList.get(0));
         else for (Scope scope : new List<>(this)) {
-            if (overMethod == 2) return null;
-            if (overMethod == 1) overMethod = 2;
-            if (overMethod == 0 && scope.getType() == Scope.ScopeType.METHOD) overMethod = 1;
             Object variable = getVariable(processUnit, scope, nameList);
             if (variable != null) return variable;
         }
@@ -40,25 +36,17 @@ public class VariableRegister extends List<Scope> {
     }
 
     public void setVariable(ProcessUnit processUnit, List<String> nameList, Object process) {
-        byte overMethod = 0;
         if (nameList.size() == 1) setVariable(nameList.get(0), process);
         else for (Scope scope : new List<>(this)) {
-            if (overMethod == 2) return;
-            if (overMethod == 1) overMethod = 2;
-            if (overMethod == 0 && scope.getType() == Scope.ScopeType.METHOD) overMethod = 1;
             if (setVariable(processUnit, scope, nameList, process)) return;
         }
     }
 
     public Object getVariable(Scope scope, String name) {
-        byte overMethod = 0;
         List<Scope> subScope = subScope(indexOf(scope));
         if (subScope.isEmpty()) return null;
         for (int i = subScope.size() - 1; i >= 0; i--) {
             Scope sco = subScope.get(i);
-            if (overMethod == 2) return null;
-            if (overMethod == 1) overMethod = 2;
-            if (overMethod == 0 && scope.getType() == Scope.ScopeType.METHOD) overMethod = 1;
             if (sco.getRegistry(name) != null) {
                 return sco.getRegistry(name);
             }
@@ -71,14 +59,10 @@ public class VariableRegister extends List<Scope> {
     }
 
     public void setVariable(Scope scope, String name, Object variable) {
-        byte overMethod = 0;
         List<Scope> subScope = subScope(indexOf(scope));
         if (subScope.isEmpty()) return;
         for (int i = subScope.size() - 1; i >= 0; i--) {
             Scope sco = subScope.get(i);
-            if (overMethod == 2) return;
-            if (overMethod == 1) overMethod = 2;
-            if (overMethod == 0 && scope.getType() == Scope.ScopeType.METHOD) overMethod = 1;
             if (sco.getRegistry(name) != null) {
                 sco.register(name, variable);
                 return;
