@@ -17,14 +17,6 @@ public abstract class VList<T> extends SimpleVar<List<T>> {
 
     public VList(List<T> object) {
         super(object);
-        register("add", (Method) (processUnit, params) -> {
-            for (Object o : params) {
-                if (o instanceof Process<?>) object.add((T) o);
-                else object.add((T) o);
-                sync.accept(object);
-            }
-            return object;
-        });
         register("remove", (Method) (processUnit, params) -> {
             object.removeAll(params);
             sync.accept(object);

@@ -15,6 +15,15 @@ public class ListProcess extends VList<Process<?>> {
 
     public ListProcess(List<Process<?>> list) {
         super(list);
+        register("add", (Method) (processUnit, params) -> {
+            for (Object o : params) {
+                if (o instanceof Process<?>) {
+                    object.add(((Process<?>) o));
+                    sync.accept(object);
+                }
+            }
+            return object;
+        });
     }
 
     public List<Process<?>> getProcesses() {
