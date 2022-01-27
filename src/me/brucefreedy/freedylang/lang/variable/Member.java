@@ -27,7 +27,7 @@ public class Member extends StealerImpl<Object> {
         running = true;
         if (a != null) {
             a.run(processUnit);
-            if (a instanceof ScopeSupplier) {
+            if (a instanceof AbstractVar) {
                 processUnit.getVariableRegister().add(((ScopeSupplier) a).getScope());
                 process.run(processUnit);
                 result = process.get();
