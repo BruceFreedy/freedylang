@@ -126,7 +126,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
         VariableRegister scope = processUnit.getVariableRegister();
         if (params != null && body != null) {  //method body
             scope.setVariable(processUnit, nodes, this);
-            parent = scope.peek();
+            if (parent == null) parent = scope.peek();
         } else if (params == null && body != null && assignment == null) {  //class
             if (initialized) {
                 process.run(processUnit);
