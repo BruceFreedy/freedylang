@@ -1,2 +1,1 @@
-plus(a,b) {return a+b}
-log plus("aaaa", "bbbb")
+if(false) log true; else log false
