@@ -43,7 +43,7 @@ public class IfImpl extends ProcessImpl<Bool> {
     public void run(ProcessUnit processUnit) {
         body.run(processUnit);
         run(body.getProcesses().stream().map(Supplier::get).allMatch(o -> o instanceof True), processUnit);
-        if (process instanceof Else) process.run(processUnit);
+        process.run(processUnit);
     }
 
     public void run(boolean result, ProcessUnit processUnit) {
