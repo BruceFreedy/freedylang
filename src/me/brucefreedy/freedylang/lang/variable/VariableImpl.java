@@ -114,7 +114,8 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             parseUnit.getDeclaration().popPeek();
         } else if (process instanceof Assignment) {  //assignment
             assignment = Process.parsing(parseUnit);
-            process = new Breaker();
+            if (assignment instanceof Stacker) process = ((Stacker<?>) assignment).getProcess();
+            else process = new Breaker();
             parseUnit.steal(p -> assignment = p, () -> assignment);
         }
     }
