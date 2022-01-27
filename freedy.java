@@ -1,12 +1,9 @@
-sum = 100
-
-        func(b) {sum = b}
-
-
-func(true)
-log sum
-func(false)
-log sum
-func(true)
-log sum
-
+class a {
+    {
+        if (false) log 1
+        else if(true) log 2;
+        else if(true) log 3;
+        else log 4;
+        log "end";
+    }
+}

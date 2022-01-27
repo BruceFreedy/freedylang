@@ -12,6 +12,11 @@ import java.util.stream.Collectors;
 
 public class VariableRegister extends List<Scope> {
 
+    @Override
+    public Scope first() {
+        return super.first();
+    }
+
     public VariableRegister() {}
 
     public VariableRegister(Collection<? extends Scope> c) {
