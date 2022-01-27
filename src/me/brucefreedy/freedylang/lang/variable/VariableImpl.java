@@ -144,7 +144,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                 if (scope.first() != null) register.add(scope.first());
                 Object result = ((Method) variable).run(new ProcessUnit(isRunAfter ? scope : register),
                         isRunAfter ? new List<>(paramsList) :
-                                new List<>(paramsList.stream().map(Supplier::get).collect(Collectors.toList())));
+                        new List<>(paramsList.stream().map(Supplier::get).collect(Collectors.toList())));
                 if (nextFunc != null && result instanceof ScopeSupplier) {
                     nextFunc.beforeScope = ((ScopeSupplier) result);
                     nextFunc.run(processUnit);
@@ -156,7 +156,8 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             Object variable = getVariable(processUnit, scope, nodes);
             boolean isRunAfter = variable instanceof MethodRunAfter;
             if (!isRunAfter) assignment.run(processUnit);
-            if (variable instanceof Method && !(variable instanceof VariableImpl)) {
+            boolean isVarImpl = variable instanceof VariableImpl;
+            if (variable instanceof Method && (!isVarImpl || ((VariableImpl) variable).isMethod())) {
                 VariableRegister register = new VariableRegister();
                 if (scope.first() != null) register.add(scope.first());
                 if (assignment instanceof AbstractFront) {
@@ -187,6 +188,10 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             }
         }
         super.run(processUnit);
+    }
+
+    public boolean isMethod() {
+        return body != null && params != null && assignment == null;
     }
 
     @Override
