@@ -54,6 +54,7 @@ public abstract class AbstractFront extends ListProcess
             if (test(process) || test(peek)) {
                 if (!parseUnit.getSource().isEmpty()) {
                     footProcess = Process.parsing(parseUnit);
+                    parseUnit.steal(p -> footProcess = p, () -> footProcess);
                 }
                 break;
             }
