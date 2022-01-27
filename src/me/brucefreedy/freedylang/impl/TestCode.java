@@ -15,6 +15,7 @@ public class TestCode extends ProcessImpl<Object> {
     @Override
     public void parse(ParseUnit parseUnit) {
         super.parse(parseUnit);
+        parseUnit.steal(p -> process = p, () -> process);
     }
 
     @Override

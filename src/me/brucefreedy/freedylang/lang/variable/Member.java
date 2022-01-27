@@ -25,20 +25,19 @@ public class Member extends StealerImpl<Object> {
     public void run(ProcessUnit processUnit) {
         if (running) return;
         running = true;
-        if (a != null) {
-            a.run(processUnit);
-            if (a instanceof AbstractVar) {
-                processUnit.getVariableRegister().add(((ScopeSupplier) a).getScope());
-                process.run(processUnit);
-                result = process.get();
-                processUnit.getVariableRegister().popPeek();
-            }
+        a.run(processUnit);
+        if (a instanceof AbstractVar) {
+            processUnit.getVariableRegister().add(((ScopeSupplier) a).getScope());
+            process.run(processUnit);
+            result = process.get();
+            processUnit.getVariableRegister().popPeek();
         }
         running = false;
     }
 
     @Override
     public Object get() {
+        if (result == null) return new Null();
         return result;
     }
 
@@ -46,4 +45,10 @@ public class Member extends StealerImpl<Object> {
     public void setProcess(Process<?> process) {
         super.setProcess(process);
     }
+
+    @Override
+    public String toString() {
+        return get().toString();
+    }
+
 }
