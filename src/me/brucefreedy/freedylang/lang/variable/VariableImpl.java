@@ -3,10 +3,7 @@ package me.brucefreedy.freedylang.lang.variable;
 import me.brucefreedy.common.List;
 import me.brucefreedy.freedylang.lang.*;
 import me.brucefreedy.freedylang.lang.Process;
-import me.brucefreedy.freedylang.lang.abst.Method;
-import me.brucefreedy.freedylang.lang.abst.MethodRunAfter;
-import me.brucefreedy.freedylang.lang.abst.Null;
-import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
+import me.brucefreedy.freedylang.lang.abst.*;
 import me.brucefreedy.freedylang.lang.body.AbstractFront;
 import me.brucefreedy.freedylang.lang.scope.Scope;
 import me.brucefreedy.freedylang.lang.scope.ScopeSupplier;
@@ -73,7 +70,8 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
         nodes.add(string);
         super.parse(parseUnit);
         while (process instanceof Member) {  //member
-            process = Process.parsing(parseUnit);
+            parseUnit.popPeek();
+            process = ((Stacker<?>) process).getProcess();
             if (process instanceof VariableImpl) {
                 VariableImpl variable = (VariableImpl) this.process;
                 nodes.addAll(variable.getNodes());
@@ -89,7 +87,8 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             process = params.getProcess();
             if (nodes.size() == 1) {
                 while (process instanceof Member) {  //next func
-                    process = Process.parsing(parseUnit);
+                    parseUnit.popPeek();
+                    process = ((Stacker<?>) process).getProcess();
                     if (process instanceof VariableImpl) {
                         nextFunc = (VariableImpl) this.process;
                     } else break;
