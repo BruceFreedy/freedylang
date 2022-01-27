@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import me.brucefreedy.common.List;
+import me.brucefreedy.freedylang.lang.abst.ScopeChild;
 import me.brucefreedy.freedylang.lang.abst.Stealer;
 import me.brucefreedy.freedylang.lang.abst.Taker;
 import me.brucefreedy.freedylang.registry.ProcessRegister;
@@ -20,7 +21,7 @@ import java.util.function.Supplier;
 public class ParseUnit extends List<Stealer<?>> {
 
     @Getter
-    final List<List<Process<?>>> declaration = new List<>();
+    final List<List<ScopeChild>> declaration = new List<>();
 
     @NonNull
     @Getter

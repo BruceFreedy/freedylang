@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
  * method, variable, class
  */
 @Processable(alias = "class")
-public class VariableImpl extends ProcessImpl<Object> implements Variable<Object>, ScopeSupplier, Method {
+public class VariableImpl extends ProcessImpl<Object> implements Variable<Object>, ScopeSupplier, Method, ScopeChild {
 
     protected String string;
     protected AbstractFront body;
@@ -29,11 +29,17 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
     protected Object result = new Null();
     protected List<String> nodes = new List<>();
     protected Scope scope;
-    protected List<Process<?>> declaration;
+    protected List<ScopeChild> declaration;
     protected boolean initialized = false;
     protected Scope parent;
     protected VariableImpl nextFunc;
     protected ScopeSupplier beforeScope;
+
+    @Override
+    public void setParent(ProcessUnit processUnit, Scope scope) {
+        processUnit.getVariableRegister().setVariable(processUnit, nodes, this);
+        parent = scope;
+    }
 
     public Scope getScope() {
         if (result instanceof ScopeSupplier) return ((ScopeSupplier) result).getScope();
@@ -125,15 +131,13 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
     public void run(ProcessUnit processUnit) {
         VariableRegister scope = processUnit.getVariableRegister();
         if (params != null && body != null) {  //method body
-            scope.setVariable(processUnit, nodes, this);
-            if (parent == null) parent = scope.peek();
         } else if (params == null && body != null && assignment == null) {  //class
             if (initialized) {
                 process.run(processUnit);
             } else {
                 initialized = true;
                 scope.setVariable(processUnit, nodes, this);
-                body.setBeforeRun(() -> declaration.forEach(p -> p.run(processUnit)));
+                body.setBeforeRun(() -> declaration.forEach(p -> p.setParent(processUnit, scope.peek())));
                 body.run(processUnit);
             }
         } else if (params != null) {  //method call
