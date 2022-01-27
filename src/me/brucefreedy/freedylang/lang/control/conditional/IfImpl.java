@@ -63,4 +63,9 @@ public class IfImpl extends ProcessImpl<Bool> {
         if (result == null) return new False();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return get().toString();
+    }
 }
