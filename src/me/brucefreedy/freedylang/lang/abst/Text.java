@@ -5,8 +5,8 @@ import me.brucefreedy.freedylang.lang.Process;
 import me.brucefreedy.freedylang.lang.ProcessUnit;
 import me.brucefreedy.freedylang.lang.variable.AbstractVar;
 import me.brucefreedy.freedylang.lang.variable.bool.Bool;
-import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 import me.brucefreedy.freedylang.lang.variable.number.Number;
+import me.brucefreedy.freedylang.lang.variable.number.SimpleNumber;
 import me.brucefreedy.freedylang.lang.variable.text.SimpleText;
 
 import java.util.Arrays;

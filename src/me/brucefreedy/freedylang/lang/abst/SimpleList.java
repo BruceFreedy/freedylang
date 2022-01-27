@@ -1,7 +1,6 @@
 package me.brucefreedy.freedylang.lang.abst;
 
 import me.brucefreedy.common.List;
-import me.brucefreedy.freedylang.lang.Process;
 
 import java.util.Collection;
 

@@ -1,6 +1,9 @@
 package me.brucefreedy.freedylang.lang;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import me.brucefreedy.common.List;
 import me.brucefreedy.freedylang.lang.abst.Stealer;
 import me.brucefreedy.freedylang.lang.abst.Taker;

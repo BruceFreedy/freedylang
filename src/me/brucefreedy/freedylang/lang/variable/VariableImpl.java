@@ -1,8 +1,9 @@
 package me.brucefreedy.freedylang.lang.variable;
 
 import me.brucefreedy.common.List;
-import me.brucefreedy.freedylang.lang.*;
 import me.brucefreedy.freedylang.lang.Process;
+import me.brucefreedy.freedylang.lang.*;
+import me.brucefreedy.freedylang.lang.abst.ProcessImpl;
 import me.brucefreedy.freedylang.lang.abst.*;
 import me.brucefreedy.freedylang.lang.body.AbstractFront;
 import me.brucefreedy.freedylang.lang.scope.Scope;
