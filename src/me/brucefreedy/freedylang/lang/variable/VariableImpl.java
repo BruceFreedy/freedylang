@@ -142,7 +142,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                 if (!isRunAfter) paramsList.forEach(p -> p.run(processUnit));
                 VariableRegister register = new VariableRegister();
                 if (scope.first() != null) register.add(scope.first());
-                Object result = ((Method) variable).run(new ProcessUnit(register),
+                Object result = ((Method) variable).run(new ProcessUnit(isRunAfter ? scope : register),
                         isRunAfter ? new List<>(paramsList) :
                         new List<>(paramsList.stream().map(Supplier::get).collect(Collectors.toList())));
                 if (nextFunc != null && result instanceof ScopeSupplier) {
@@ -160,11 +160,11 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
                 VariableRegister register = new VariableRegister();
                 if (scope.first() != null) register.add(scope.first());
                 if (assignment instanceof AbstractFront) {
-                    result = ((Method) variable).run(new ProcessUnit(register), ((AbstractFront) assignment).getProcesses());
+                    result = ((Method) variable).run(new ProcessUnit(isRunAfter ? scope : register), ((AbstractFront) assignment).getProcesses());
                 } else if (assignment instanceof Method) {
-                    result = ((Method) variable).run(new ProcessUnit(register),
+                    result = ((Method) variable).run(new ProcessUnit(isRunAfter ? scope : register),
                             new List<>(Collections.singletonList(isRunAfter ? assignment : assignment.get())));
-                } else result = ((Method) variable).run(new ProcessUnit(register), new List<>(Collections.singletonList(assignment)));
+                } else result = ((Method) variable).run(new ProcessUnit(isRunAfter ? scope : register), new List<>(Collections.singletonList(assignment)));
             } else if (assignment instanceof Method) {
                 result = isRunAfter ? assignment : assignment.get();
                 setVariable(processUnit, scope, nodes, result);
