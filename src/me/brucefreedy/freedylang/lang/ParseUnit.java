@@ -22,10 +22,6 @@ public class ParseUnit extends List<Stealer<?>> {
     @Getter
     final List<List<Process<?>>> declaration = new List<>();
 
-    @Getter
-    @Setter
-    Process<?> next;
-
     @NonNull
     @Getter
     ProcessRegister processRegister;

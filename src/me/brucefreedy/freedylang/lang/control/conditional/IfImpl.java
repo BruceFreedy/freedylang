@@ -31,16 +31,11 @@ public class IfImpl extends ProcessImpl<Bool> {
                 process = ((Stacker<?>) runBody).getProcess();
                 if (process instanceof Breaker) {
                     process = Process.parsing(parseUnit);
-                    parseUnit.setNext(process);
-                    return;
                 }
             }
-            process = Process.parsing(parseUnit);
-            parseUnit.setNext(process);
             if (process instanceof Else) {
                 ((Else) process).anIf = this;
             }
-            process = new Breaker();
         }
     }
 
@@ -48,6 +43,7 @@ public class IfImpl extends ProcessImpl<Bool> {
     public void run(ProcessUnit processUnit) {
         body.run(processUnit);
         run(body.getProcesses().stream().map(Supplier::get).allMatch(o -> o instanceof True), processUnit);
+        if (process instanceof Else) process.run(processUnit);
     }
 
     public void run(boolean result, ProcessUnit processUnit) {

@@ -1,9 +1,7 @@
 class a {
     {
-        if (false) log 1
-        else if(true) log 2;
-        else if(true) log 3;
-        else log 4;
+        if (false) {log 1}
+        else log 2;
         log "end";
     }
 }
