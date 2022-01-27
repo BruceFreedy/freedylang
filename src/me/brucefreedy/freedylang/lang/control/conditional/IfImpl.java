@@ -23,6 +23,7 @@ public class IfImpl extends ProcessImpl<Bool> {
         process = Process.parsing(parseUnit);
         if (process instanceof AbstractFront) {
             body = ((AbstractFront) process);
+            process = new Breaker();
             runBody = body.getProcess();
             if (runBody instanceof Breaker) {
                 runBody = Process.parsing(parseUnit);
