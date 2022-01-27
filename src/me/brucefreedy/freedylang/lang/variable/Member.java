@@ -17,7 +17,7 @@ public class Member extends StealerImpl<Object> {
     @Override
     public void parse(ParseUnit parseUnit) {
         process = Process.parsing(parseUnit);
-        parseUnit.steal(p -> process = p, () -> process);
+//        parseUnit.steal(p -> process = p, () -> process);
         parseUnit.add(this);
     }
 
