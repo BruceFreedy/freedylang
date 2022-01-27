@@ -22,17 +22,20 @@ public class IfImpl extends ProcessImpl<Bool> {
     @Override
     public void parse(ParseUnit parseUnit) {
         process = Process.parsing(parseUnit);
+        parseUnit.steal(p -> process = p, () -> process);
         if (process instanceof AbstractFront) {
             body = ((AbstractFront) process);
             process = new Breaker();
             runBody = body.getProcess();
             if (runBody instanceof Breaker) {
                 runBody = Process.parsing(parseUnit);
+                parseUnit.steal(p -> runBody = p, () -> runBody);
             }
             if (runBody instanceof Stacker) {
                 process = ((Stacker<?>) runBody).getProcess();
                 if (process instanceof Breaker) {
                     process = Process.parsing(parseUnit);
+                    parseUnit.steal(p -> process = p, () -> process);
                 }
             }
             if (process instanceof Else) {
