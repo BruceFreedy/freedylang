@@ -8,6 +8,7 @@ import me.brucefreedy.freedylang.lang.abst.*;
 import me.brucefreedy.freedylang.lang.body.AbstractFront;
 import me.brucefreedy.freedylang.lang.scope.Scope;
 import me.brucefreedy.freedylang.lang.scope.ScopeSupplier;
+import net.jafama.FastMath;
 
 import java.util.Collections;
 import java.util.function.Supplier;
@@ -213,10 +214,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
             return this;
         }
         VariableRegister scope = processUnit.getVariableRegister();
-        if (args.size() <= params.size()) {
-            body.setBeforeRun(
-                    () -> IntStream.range(0, args.size()).forEach(i -> scope.setVariable(processUnit, args.get(i), params.get(i))));
-        }
+        body.setBeforeRun(() -> IntStream.range(0, FastMath.min(params.size(), args.size())).forEach(i -> scope.setVariable(processUnit, args.get(i), params.get(i))));
         scope.add(parent);
         body.run(processUnit);
         scope.popPeek();
