@@ -1,1 +1,0 @@
-if(false) log true; else log false
