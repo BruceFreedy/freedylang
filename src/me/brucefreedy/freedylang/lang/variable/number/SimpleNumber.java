@@ -13,7 +13,8 @@ public class SimpleNumber extends Number {
     public void parse(ParseUnit parseUnit) {
         process = Process.parsing(parseUnit);
         if (process instanceof Member) {
-            process = Process.parsing(parseUnit);
+            parseUnit.popPeek();
+            process = ((Member) process).getProcess();
             try {
                 if (process instanceof SimpleNumber) {
                     SimpleNumber simpleNumber = (SimpleNumber) this.process;
