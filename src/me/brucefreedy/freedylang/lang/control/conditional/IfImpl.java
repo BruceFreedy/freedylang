@@ -46,7 +46,6 @@ public class IfImpl extends ProcessImpl<Bool> {
 
     @Override
     public void run(ProcessUnit processUnit) {
-        System.out.println("aaaaaaaa");
         body.run(processUnit);
         run(body.getProcesses().stream().map(Supplier::get).allMatch(o -> o instanceof True), processUnit);
     }
