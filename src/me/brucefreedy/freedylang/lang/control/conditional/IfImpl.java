@@ -17,6 +17,7 @@ public class IfImpl extends ProcessImpl<Bool> {
     Bool result;
     AbstractFront body;  //condition body
     Process<?> runBody;  //'true' body
+    Else anElse;
 
     @Override
     public void parse(ParseUnit parseUnit) {
@@ -35,7 +36,8 @@ public class IfImpl extends ProcessImpl<Bool> {
                 }
             }
             if (process instanceof Else) {
-                ((Else) process).anIf = this;
+                (anElse = (Else) process).anIf = this;
+                process = new Breaker();
             }
         }
     }
@@ -44,6 +46,7 @@ public class IfImpl extends ProcessImpl<Bool> {
     public void run(ProcessUnit processUnit) {
         body.run(processUnit);
         run(body.getProcesses().stream().map(Supplier::get).allMatch(o -> o instanceof True), processUnit);
+        if (anElse != null) anElse.run(processUnit);
         process.run(processUnit);
     }
 
