@@ -33,11 +33,9 @@ public class IfImpl extends ProcessImpl<Bool> {
             }
             if (runBody instanceof Stacker) {
                 process = ((Stacker<?>) runBody).getProcess();
-                if (process instanceof Breaker) {
-                    process = Process.parsing(parseUnit);
-                    parseUnit.steal(p -> process = p, () -> process);
-                }
             }
+            process = Process.parsing(parseUnit);
+            parseUnit.steal(p -> process = p, () -> process);
             if (process instanceof Else) {
                 (anElse = (Else) process).anIf = this;
                 process = new Breaker();
