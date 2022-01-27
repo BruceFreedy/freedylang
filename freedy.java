@@ -1,1 +1,1 @@
-[1,2,3,4].each=log this
+if(false) log 1 ;else log 2

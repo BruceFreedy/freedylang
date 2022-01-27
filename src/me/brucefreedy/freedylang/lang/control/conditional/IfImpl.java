@@ -32,12 +32,11 @@ public class IfImpl extends ProcessImpl<Bool> {
                 if (process instanceof Breaker) {
                     process = Process.parsing(parseUnit);
                     parseUnit.setNext(process);
+                    return;
                 }
             }
-            else {
-                process = Process.parsing(parseUnit);
-                parseUnit.setNext(process);
-            }
+            process = Process.parsing(parseUnit);
+            parseUnit.setNext(process);
             if (process instanceof Else) {
                 ((Else) process).anIf = this;
             }
@@ -47,6 +46,7 @@ public class IfImpl extends ProcessImpl<Bool> {
 
     @Override
     public void run(ProcessUnit processUnit) {
+        System.out.println("aaaaaaaa");
         body.run(processUnit);
         run(body.getProcesses().stream().map(Supplier::get).allMatch(o -> o instanceof True), processUnit);
     }
