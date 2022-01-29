@@ -78,7 +78,6 @@ public enum     ProcessDef {
     FOR(ForImpl::new),
     MILLI_SEC(Millisec::new),
     NANO_TIME(NanoTime::new),
-    LAMBDA(Lambda::new),
     ;
     private final Supplier<Process<?>> processSupplier;
 }
