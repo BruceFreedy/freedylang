@@ -28,17 +28,25 @@ public class VariableRegister extends List<Scope> {
 
     public Object getVariable(ProcessUnit processUnit, List<String> nameList) {
         if (nameList.size() == 1) return getVariable(nameList.get(0));
-        else for (Scope scope : new List<>(this)) {
-            Object variable = getVariable(processUnit, scope, nameList);
-            if (variable != null) return variable;
+        else {
+            List<Scope> scopes = new List<>(this);
+            for (int i = scopes.size() - 1; i >= 0; i--) {
+                Scope scope = scopes.get(i);
+                Object variable = getVariable(processUnit, scope, nameList);
+                if (variable != null) return variable;
+            }
         }
         return null;
     }
 
     public void setVariable(ProcessUnit processUnit, List<String> nameList, Object process) {
         if (nameList.size() == 1) setVariable(nameList.get(0), process);
-        else for (Scope scope : new List<>(this)) {
-            if (setVariable(processUnit, scope, nameList, process)) return;
+        else {
+            List<Scope> scopes = new List<>(this);
+            for (int i = scopes.size() - 1; i >= 0; i--) {
+                Scope scope = scopes.get(i);
+                if (setVariable(processUnit, scope, nameList, process)) return;
+            }
         }
     }
 
