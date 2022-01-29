@@ -10,4 +10,9 @@ public class Lambda extends ProcessImpl<Process<?>> {
     public Process<?> get() {
         return process;
     }
+
+    @Override
+    public String toString() {
+        return get().toString();
+    }
 }
