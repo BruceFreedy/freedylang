@@ -39,6 +39,7 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
     public void setParent(ProcessUnit processUnit, Scope scope) {
         processUnit.getVariableRegister().setVariable(processUnit, nodes, this);
         parent = scope;
+        if (body != null && params == null) run(processUnit);
     }
 
     public Scope getScope() {
@@ -74,7 +75,11 @@ public class VariableImpl extends ProcessImpl<Object> implements Variable<Object
 
     @Override
     public void parse(ParseUnit parseUnit) {
-        if (string == null) parseUnit.getDeclaration().add(declaration = new List<>());
+        if (string == null) {
+            List<ScopeChild> peek = parseUnit.getDeclaration().peek();
+            if (peek != null) peek.add(this);
+            parseUnit.getDeclaration().add(declaration = new List<>());
+        }
         nodes.add(string);
         super.parse(parseUnit);
         while (process instanceof Member) {  //member
