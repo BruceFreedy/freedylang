@@ -52,7 +52,7 @@ public interface Comparison {
 
         @Override
         public Bool get() {
-            if (result == null) return Bool.get(false);
+            if (result == null) return Bool.get(true);
             return result;
         }
 
